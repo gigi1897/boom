@@ -15,8 +15,7 @@ var bgImage = new Image();
 bgImage.onload = function () {
 	bgReady = true;
 };
-
-bgImage.src = "images/background.png";
+bgImage.src = "ressources/images/background.png";
 
 // Hero image
 var heroReady = false;
@@ -25,7 +24,7 @@ var heroImage = new Image();
 heroImage.onload = function () {
 	heroReady = true;
 };
-heroImage.src = "images/smallhero.png";
+heroImage.src = "ressources/images/smallhero.png";
 
 //gazon
 var grassReady = false;
@@ -33,7 +32,7 @@ var grassImage = new Image();
 grassImage.onload = function () {
     grassReady = true;
 }
-grassImage.src = "images/grass.png";
+grassImage.src = "ressources/images/grass.png";
 
 //  blocs indestructibles
 var blocReady = false;
@@ -41,7 +40,7 @@ var blocImage = new Image();
 blocImage.onload = function () {
     blocReady = true;
 }
-blocImage.src = "images/indestructible.png";
+blocImage.src = "ressources/images/indestructible.png";
 
 
 //bloc destructible
@@ -50,7 +49,7 @@ var blocdestructibleImage = new Image();
 blocdestructibleImage.onload = function () {
     blocdestructibleReady = true;
 }
-blocdestructibleImage.src = "images/destructible.png";
+blocdestructibleImage.src = "ressources/images/destructible.png";
 
 
 // Game objects
@@ -59,10 +58,20 @@ var hero = {
     x: 0,
 	y: 0
 };
-var bloc = {
-    x: 100,
-    y: 200
-};
+
+var indestructibleMap = [[0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
+                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
+                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
+                        [0,0,2,0,0,0,0,0,2,0,0,0,0,0,0],
+                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
+                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
+                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0]];
+
+
 
 // Handle keyboard controls
 var keysDown = {};
@@ -75,10 +84,9 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
-// Reset the game when the player catches a monster
+// Reset the game
 var reset = function () {
-    hero.x = 100;
-    hero.y = 100;
+    //todo
 };
 
 
@@ -88,44 +96,35 @@ var update = function (modifier) {
     var XBefore = hero.x;
     var YBefore = hero.y;
     
-	if (38 in keysDown) { // Player holding up
+	if (38 in keysDown) // Player holding up
         hero.y -= hero.speed * modifier;
-    }
 
-	if (37 in keysDown) { // Player holding left
+	if (37 in keysDown) // Player holding left
         hero.x -= hero.speed * modifier;
-	}
-	if (40 in keysDown) { // Player holding down
-            hero.y += hero.speed * modifier;
-	}
-	if (39 in keysDown) { // Player holding right
-            hero.x += hero.speed * modifier;
-	}
+
+	if (40 in keysDown) // Player holding down
+        hero.y += hero.speed * modifier;
+
+	if (39 in keysDown) // Player holding right
+        hero.x += hero.speed * modifier;
+
    
     //Collision avec les murs du terrain
     //mur droite
     if(hero.x+24 >= 545-32 )
-    {
         hero.x = 545-(32+24); // on fige le mouvement du joueur
-    }
 
     //mur gauche
     if(hero.x <= 32 )
-    {
-        hero.x = 32
-    }
+        hero.x = 32;
 
     //plafond
     if(hero.y <= 32 )
-    {
-        hero.y = 32
-    }
+        hero.y = 32;
 
     //bas de la map
     if(hero.y >= 416-64 )
-    {
-        hero.y = 416-(32+28)
-    }
+        hero.y = 416-(32+28);
     
     //détection de collision avec les blocs indestructible
     for (var i = 64; i < mapwidth-64; i=i+64) {
@@ -138,6 +137,24 @@ var update = function (modifier) {
                 hero.y = YBefore;
 	        }
         }
+    }
+    var AxeX = 0;
+    var AxeY = 0;
+    for (i = 0; i < indestructibleMap.length; i++) {
+        AxeY += 32;
+		for (j = 0; j<indestructibleMap[0].length; j++){
+            var blocdes = {};
+            AxeX += 32;
+            blocdes.x = AxeX;
+            blocdes.y = AxeY;
+            if(indestructibleMap[i][j] == 2){
+                if (hero.x <= (blocdes.x + 32) && blocdes.x <= (hero.x + 23) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + 23)) {
+                    hero.x = XBefore;
+                    hero.y = YBefore;
+                }
+	        }
+        }
+            AxeX=0;
     }
 };
 
@@ -170,8 +187,7 @@ var render = function () {
         
         //on place les blocs sur le terrain
         for (var i = 64; i < mapwidth-64; i=i+64) {
-
-			for (var j = 64; j< mapheight-64; j=j+64){
+			for (var j = 64; j<mapheight-64; j=j+64){
                 ctx.drawImage(blocImage, i, j);
 			}
 		}
@@ -179,17 +195,18 @@ var render = function () {
     }
 
     if(blocdestructibleReady){
-
+        var AxeX = 0;
+        var AxeY = 0;
         //on place aléatoirement les blocs destructibles sur le terrain
-        /*
-        for (i = 32; i < 481; i=i+64) {
-
-			for (j = 32; j< 352; j=j+64){
-                ctx.drawImage(blocdestructibleImage, i,j);
+        for (i = 0; i < indestructibleMap.length; i++) {
+            AxeY += 32;
+			for (j = 0; j<indestructibleMap[0].length; j++){
+                AxeX += 32;
+                if(indestructibleMap[i][j] == 2)
+                    ctx.drawImage(blocdestructibleImage, AxeX, AxeY);
 			}
+            AxeX=0;
 		}
-        */
-
     }
 
 	if (heroReady) {
