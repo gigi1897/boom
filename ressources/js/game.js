@@ -51,6 +51,17 @@ blocdestructibleImage.onload = function () {
 }
 blocdestructibleImage.src = "ressources/images/destructible.png";
 
+// Bombe
+var bombReady = false;
+var bombImage = new Image();
+
+bombImage.onload = function () {
+	bombReady = true;
+};
+bombImage.src = "ressources/images/test_bomb.png";
+
+
+
 
 // Game objects
 var hero = {
@@ -59,7 +70,7 @@ var hero = {
 	y: 0
 };
 
-var indestructibleMap = [[0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+var indestructibleMap = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                         [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
                         [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
                         [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
@@ -69,7 +80,7 @@ var indestructibleMap = [[0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
                         [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
                         [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
                         [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
-                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0]];
+                        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
 
 
 
@@ -89,14 +100,18 @@ var reset = function () {
     //todo
 };
 
-
+var bomb = {
+    x: 0,
+    y: 0,
+    depose: false
+};
 
 // Update game objects
 var update = function (modifier) {
     var XBefore = hero.x;
     var YBefore = hero.y;
     
-	if (38 in keysDown) // Player holding up
+    if (38 in keysDown) // Player holding up
         hero.y -= hero.speed * modifier;
 
 	if (37 in keysDown) // Player holding left
@@ -108,7 +123,11 @@ var update = function (modifier) {
 	if (39 in keysDown) // Player holding right
         hero.x += hero.speed * modifier;
 
-   
+    if (32 in keysDown){ // release bomb
+        bomb.depose = true;
+    }
+
+
     //Collision avec les murs du terrain
     //mur droite
     if(hero.x+24 >= 545-32 )
@@ -209,9 +228,16 @@ var render = function () {
 		}
     }
 
+
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
+    if(bomb.depose){
+        bomb.x = hero.x;
+        bomb.y = hero.y;
+        ctx.drawImage(bombImage, bomb.x, bomb.y);
+    }
+
 };
 
 // The main game loop
