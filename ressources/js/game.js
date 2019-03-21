@@ -31,7 +31,7 @@ var grassReady = false;
 var grassImage = new Image();
 grassImage.onload = function () {
     grassReady = true;
-}
+};
 grassImage.src = "ressources/images/grass.png";
 
 //  blocs indestructibles
@@ -39,7 +39,7 @@ var blocReady = false;
 var blocImage = new Image();
 blocImage.onload = function () {
     blocReady = true;
-}
+};
 blocImage.src = "ressources/images/indestructible.png";
 
 
@@ -48,7 +48,7 @@ var blocdestructibleReady = false;
 var blocdestructibleImage = new Image();
 blocdestructibleImage.onload = function () {
     blocdestructibleReady = true;
-}
+};
 blocdestructibleImage.src = "ressources/images/destructible.png";
 
 // Bombe
@@ -59,9 +59,6 @@ bombImage.onload = function () {
     bombReady = true;
 };
 bombImage.src = "ressources/images/test_bomb.png";
-
-
-
 
 // Game objects
 var hero = {
@@ -126,7 +123,6 @@ var update = function (modifier) {
     if (32 in keysDown) // release bomb
         bomb.depose = true;
 
-
     //Collision avec les murs du terrain
     //mur droite
     if (hero.x + 24 >= 545 - 32)
@@ -186,15 +182,13 @@ var render = function () {
     //on met en place le décor indestructible
     if (blocReady) {
         var x = 0;
-        while (x <= mapwidth) {
-            //on place les blocs horizontaux en bord
+        while (x <= mapwidth) { //on place les blocs horizontaux en bord
             ctx.drawImage(blocImage, x, 0);
             ctx.drawImage(blocImage, x, mapheight - 32);
             x = x + 32;
         }
         x = 0;
-        while (x <= mapheight) {
-            //on place les blocs verticaux en bord
+        while (x <= mapheight) { //on place les blocs verticaux en bord
             ctx.drawImage(blocImage, 0, x);
             ctx.drawImage(blocImage, mapwidth - 32, x);
             x = x + 32;
@@ -225,9 +219,10 @@ var render = function () {
         ctx.drawImage(heroImage, hero.x, hero.y);
 
     if (bomb.depose) {
-        ctx.drawImage(bombImage, hero.x+24, hero.y);
+        x = hero.x;
+        y = hero.y;
+        ctx.drawImage(bombImage, x, y);
     }
-
 };
 
 // The main game loop
