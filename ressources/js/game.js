@@ -7,27 +7,25 @@ canvas.height = 416;
 var mapheight = canvas.height; //416px
 var mapwidth = canvas.width; //545 px
 
-//salut les amis
-
-// Generate background
+// Generate background Image
 var bgReady = false;
 var bgImage = new Image();
-
 bgImage.onload = function () {
 	bgReady = true;
 };
 bgImage.src = "ressources/images/background.png";
 
+
 // Hero image
 var heroReady = false;
 var heroImage = new Image();
-
 heroImage.onload = function () {
 	heroReady = true;
 };
 heroImage.src = "ressources/images/smallhero.png";
 
-//gazon
+
+//gazonbom Image
 var grassReady = false;
 var grassImage = new Image();
 grassImage.onload = function () {
@@ -35,7 +33,8 @@ grassImage.onload = function () {
 }
 grassImage.src = "ressources/images/grass.png";
 
-//  blocs indestructibles
+
+//  blocs indestructibles Image
 var blocReady = false;
 var blocImage = new Image();
 blocImage.onload = function () {
@@ -44,7 +43,7 @@ blocImage.onload = function () {
 blocImage.src = "ressources/images/indestructible.png";
 
 
-//bloc destructible
+//bloc destructible Image
 var blocdestructibleReady = false;
 var blocdestructibleImage = new Image();
 blocdestructibleImage.onload = function () {
@@ -52,33 +51,46 @@ blocdestructibleImage.onload = function () {
 }
 blocdestructibleImage.src = "ressources/images/destructible.png";
 
-// Bombe
+
+// Bombe Image
 var bombReady = false;
 var bombImage = new Image();
-
 bombImage.onload = function () {
 	bombReady = true;
 };
 bombImage.src = "ressources/images/test_bomb.png";
 
 
-
-
-// Game objects
+// hero
 var hero = {
 	speed: 100,// movement in pixels per second
     x: 0,
 	y: 0
 };
 
+//bomb
+var bomb = {
+    speed: 0,
+    x: 230,
+    y: 195,
+    depose: false
+};
+
+var posX = 0;
+var posY = 0;
+
+//map decor
+//0 => nothing
+//1 => indestructible bloc
+//2 => destrusctible bloc
 var indestructibleMap = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
-                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
-                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
-                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
-                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
-                        [0,0,2,0,0,0,0,0,2,0,0,0,0,0,0],
-                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
+                        [0,1,2,1,2,1,2,1,2,1,2,1,0,1,0],
+                        [0,0,2,0,0,0,2,2,2,2,2,0,0,0,0],
+                        [0,1,2,1,0,1,2,1,2,1,2,1,0,1,0],
+                        [0,0,2,2,2,2,2,2,2,2,2,0,0,0,0],
+                        [0,1,2,1,2,1,0,1,0,1,0,1,0,1,0],
+                        [0,0,2,0,2,2,2,0,2,0,0,0,0,0,0],
+                        [0,1,2,1,0,1,2,1,0,1,0,1,0,1,0],
                         [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
                         [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
                         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
@@ -96,16 +108,13 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
+
+
 // Reset the game
 var reset = function () {
     //todo
 };
 
-var bomb = {
-    x: 0,
-    y: 0,
-    depose: false
-};
 
 // Update game objects
 var update = function (modifier) {
@@ -125,6 +134,8 @@ var update = function (modifier) {
         hero.x += hero.speed * modifier;
 
     if (32 in keysDown){ // release bomb
+        posX = hero.x;
+        posY = hero.y;
         bomb.depose = true;
     }
 
@@ -180,14 +191,6 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-    if(grassReady){
-       	for (i = 0; i < mapwidth; i=i+32) {
-			for (j = 0; j< mapheight; j=j+32){
-                ctx.drawImage(grassImage, i,j);
-			}
-		}
-    }
-
     //on met en place le décor indestructible
     if(blocReady){
         var x = 0;
@@ -204,42 +207,53 @@ var render = function () {
             ctx.drawImage(blocImage,mapwidth-32,x);
             x=x+32;
         }
-        
-        //on place les blocs sur le terrain
-        for (var i = 64; i < mapwidth-64; i=i+64) {
-			for (var j = 64; j<mapheight-64; j=j+64){
-                ctx.drawImage(blocImage, i, j);
-			}
-		}
-        
     }
 
-    if(blocdestructibleReady){
+    //Place le décor
+    if(blocdestructibleReady && blocReady && grassReady){
         var AxeX = 0;
         var AxeY = 0;
         //on place aléatoirement les blocs destructibles sur le terrain
-        for (i = 0; i < indestructibleMap.length; i++) {
+        for (var i = 0; i < indestructibleMap.length; i++) {
             AxeY += 32;
-			for (j = 0; j<indestructibleMap[0].length; j++){
+			for (var j = 0; j<indestructibleMap[0].length; j++){
                 AxeX += 32;
-                if(indestructibleMap[i][j] == 2)
-                    ctx.drawImage(blocdestructibleImage, AxeX, AxeY);
+                switch(indestructibleMap[i][j]){
+                    case 1:
+                        ctx.drawImage(blocImage, AxeX, AxeY);
+                        break;
+                    case 2:
+                        ctx.drawImage(blocdestructibleImage, AxeX, AxeY);
+                        break;
+                    case 0:
+                        ctx.drawImage(grassImage, AxeX, AxeY);
+                        break;
+                }
 			}
             AxeX=0;
 		}
     }
 
-
+    //Draw hero
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
-    if(bomb.depose){
-        bomb.x = hero.x;
-        bomb.y = hero.y;
+    if(bombReady){
         ctx.drawImage(bombImage, bomb.x, bomb.y);
     }
 
+    //Draw Bomb
+    if(bomb.depose && bombReady){
+        ctx.drawImage(bombImage, posX, posY);
+    }
+
 };
+
+
+
+
+
+
 
 // The main game loop
 var main = function () {
