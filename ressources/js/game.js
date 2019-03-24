@@ -7,6 +7,7 @@ canvas.height = 416;
 var mapheight = canvas.height; //416px
 var mapwidth = canvas.width; //545 px
 
+//salut les amis
 
 // Generate background
 var bgReady = false;
