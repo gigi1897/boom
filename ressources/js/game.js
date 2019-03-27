@@ -70,10 +70,10 @@ var hero = {
 
 //bomb
 var bomb = {
-    speed: 0,
     x: 230,
     y: 195,
-    depose: false
+    depose: false,
+    explose: false
 };
 
 var posX = 0;
@@ -137,6 +137,7 @@ var update = function (modifier) {
         posX = hero.x;
         posY = hero.y;
         bomb.depose = true;
+        bomb.explose = true;
     }
 
 
@@ -235,24 +236,20 @@ var render = function () {
     }
 
     //Draw hero
-	if (heroReady) {
+	if (heroReady)
 		ctx.drawImage(heroImage, hero.x, hero.y);
-	}
-    if(bombReady){
-        ctx.drawImage(bombImage, bomb.x, bomb.y);
-    }
 
     //Draw Bomb
-    if(bomb.depose && bombReady){
+    if(bomb.depose && bombReady)
         ctx.drawImage(bombImage, posX, posY);
-    }
 
+    if(bomb.explose)
+        setTimeout(ctx.clearRect(bomb.x,bomb.y,23,27),3000);
 };
 
-
-
-
-
+/*var explosion = function () {
+   console.log("Biiiiffle");
+}*/
 
 
 // The main game loop
