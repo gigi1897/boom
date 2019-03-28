@@ -4,8 +4,8 @@ var ctx = canvas.getContext("2d");
 canvas.width = 545;
 canvas.height = 416;
 
-var mapheight = canvas.height; //416px
-var mapwidth = canvas.width; //545 px
+const mapheight = canvas.height; //416px
+const mapwidth = canvas.width; //545 px
 
 // Generate background Image
 var bgReady = false;
@@ -65,16 +65,24 @@ bombImage.src = "ressources/images/test_bomb.png";
 var hero = {
 	speed: 100,// movement in pixels per second
     x: 0,
-	y: 0
+	y: 0,
+    height: 23,
+    width: 23,
 };
 
 //bomb
 var bomb = {
-    speed: 0,
     x: 230,
     y: 195,
-    depose: false
+    depose: false,
+    droppedAt: null,
 };
+
+var bloc = {
+    height: 32,
+    width: 32,
+}
+
 
 var posX = 0;
 var posY = 0;
@@ -137,13 +145,14 @@ var update = function (modifier) {
         posX = hero.x;
         posY = hero.y;
         bomb.depose = true;
+        bomb.droppedAt = new Date().getDate();
     }
 
 
     //Collision avec les murs du terrain
     //mur droite
-    if(hero.x+24 >= 545-32 )
-        hero.x = 545-(32+24); // on fige le mouvement du joueur
+    if(hero.x+24 >= mapwidth-32 )
+        hero.x = mapwidth-(32+24); // on fige le mouvement du joueur
 
     //mur gauche
     if(hero.x <= 32 )
@@ -154,8 +163,8 @@ var update = function (modifier) {
         hero.y = 32;
 
     //bas de la map
-    if(hero.y >= 416-64 )
-        hero.y = 416-(32+28);
+    if(hero.y >= mapheight-64 )
+        hero.y = mapheight-(32+28);
     
     //détection de collision avec les blocs indestructible
     for (var i = 64; i < mapwidth-64; i=i+64) {
@@ -163,7 +172,7 @@ var update = function (modifier) {
             var blocloop = {};
             blocloop.x = i;
             blocloop.y = j;
-            if (hero.x <= (blocloop.x + 32) && blocloop.x <= (hero.x + 23) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + 23)) {
+            if (hero.x <= (blocloop.x + 32) && blocloop.x <= (hero.x + hero.height) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + hero.width)) {
                 hero.x = XBefore;
                 hero.y = YBefore;
 	        }
@@ -234,26 +243,26 @@ var render = function () {
 		}
     }
 
-    //Draw hero
-	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
-	}
-    if(bombReady){
-        ctx.drawImage(bombImage, bomb.x, bomb.y);
-    }
 
     //Draw Bomb
     if(bomb.depose && bombReady){
         ctx.drawImage(bombImage, posX, posY);
     }
 
+    //Draw hero
+	if (heroReady) {
+		ctx.drawImage(heroImage, hero.x, hero.y);
+	}
+
+
+
+
+    if(bomb.droppedAt !== null){
+        //check si le nombre le getTime est plus grand que 3 secondes par rapport au getTime enregistré lors de la déposition de la bombe
+            console.log(bomb.droppedAt);
+            bomb.droppedAt = null;
+    }
 };
-
-
-
-
-
-
 
 // The main game loop
 var main = function () {
@@ -262,7 +271,6 @@ var main = function () {
 
 	update(delta / 1000);
 	render();
-
 	then = now;
 
 	// Request to do this again ASAP
