@@ -58,7 +58,10 @@ var bombImage = new Image();
 bombImage.onload = function () {
 	bombReady = true;
 };
-bombImage.src = "ressources/images/test_bomb.png";
+bombImage.src = "ressources/images/labombe.png";
+
+
+
 
 
 // hero
@@ -68,32 +71,47 @@ var hero = {
 	y: 0
 };
 
+
+//nombre de bombes posées sur le terrain
+var bombsonmap = 0;
+
+//nombre de bombes que le joueur a le droit de poser en même temps
+var autorizedbombs = 2;
+
+
+
 //bomb
 var bomb = {
     speed: 0,
-    x: 230,
-    y: 195,
     depose: false
-};
+
+  };
 
 var posX = 0;
 var posY = 0;
+
+var numblocX = 0;
+var numblocY = 0;
+
+
+//  ATTENTION CETTE MATRICE NE CONTIENT PAS LES BLOC INDESCTRUCTIBLES DU BORD DE LA MAP !!!!
 
 //map decor
 //0 => nothing
 //1 => indestructible bloc
 //2 => destrusctible bloc
-var indestructibleMap = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                        [0,1,2,1,2,1,2,1,2,1,2,1,0,1,0],
-                        [0,0,2,0,0,0,2,2,2,2,2,0,0,0,0],
-                        [0,1,2,1,0,1,2,1,2,1,2,1,0,1,0],
-                        [0,0,2,2,2,2,2,2,2,2,2,0,0,0,0],
-                        [0,1,2,1,2,1,0,1,0,1,0,1,0,1,0],
-                        [0,0,2,0,2,2,2,0,2,0,0,0,0,0,0],
-                        [0,1,2,1,0,1,2,1,0,1,0,1,0,1,0],
-                        [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
-                        [0,1,2,1,0,1,0,1,0,1,0,1,0,1,0],
-                        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+// index                  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14
+var indestructibleMap = [[0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0 ],  // 0
+                        [ 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0 ],  // 1
+                        [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],  // 2
+                        [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 ],  // 3
+                        [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],  // 4
+                        [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 ],  // 5
+                        [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],  // 6
+                        [ 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 ],  // 7
+                        [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],  // 8
+                        [ 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0 ],  // 9
+                        [ 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0]]; // 10
 
 
 
@@ -133,10 +151,58 @@ var update = function (modifier) {
 	if (39 in keysDown) // Player holding right
         hero.x += hero.speed * modifier;
 
-    if (32 in keysDown){ // release bomb
-        posX = hero.x;
-        posY = hero.y;
-        bomb.depose = true;
+
+    if (32 in keysDown){ // place bomb
+
+        //on vérifie si le joueur peut poser une bombe
+
+        // il a le droit d'en poser 2, mais l'instanciation ne fonctionne pas
+        //if(bombsonmap <= autorizedbombs){
+
+            //on renseigne le bloc touché (va servir pour la matrice)
+            numblocX = parseInt(hero.x/32);
+            numblocY = parseInt(hero.y/32);
+
+            //on centre la bombe
+            posX = numblocX * 32;
+            posY = numblocY * 32;
+
+            //bombsonmap++;
+
+            bomb.depose = true;
+
+
+            //EXPLOSION DE LA BOMBE - CODE A DEPLACER !!!
+            //grace à la matrice, on contrôle si un bloc destructible se trouve à gauche, droite, haut ou bas
+
+            var ligne   =   numblocY  -1; //il faut enlever 1 car la matrice ne comprend pas les bords du terrain
+            var colonne =   numblocX  -1;
+
+            //console.log("la case de la matrice ou se trouve la bombe contient = "+ indestructibleMap[ligne][colonne]);
+
+            //bloc destructible à gauche ?
+            if(indestructibleMap[ligne][colonne-1]==2){
+               indestructibleMap[ligne][colonne-1]=0;
+            }
+
+            //bloc destructible à droite ?
+            if(indestructibleMap[ligne][colonne+1]==2){
+                indestructibleMap[ligne][colonne+1]=0;
+            }
+
+            //bloc destructible en haut ?
+            if(indestructibleMap[ligne+1][colonne]==2){
+                indestructibleMap[ligne+1][colonne]=0;
+            }
+
+            //bloc destructible en bas ?
+            if(indestructibleMap[ligne-1][colonne]==2){
+                indestructibleMap[ligne-1][colonne]=0;
+            }
+
+
+
+
     }
 
 
@@ -169,6 +235,7 @@ var update = function (modifier) {
 	        }
         }
     }
+
     var AxeX = 0;
     var AxeY = 0;
     for (i = 0; i < indestructibleMap.length; i++) {
@@ -234,6 +301,8 @@ var render = function () {
 		}
     }
 
+
+
     //Draw hero
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
@@ -244,8 +313,12 @@ var render = function () {
 
     //Draw Bomb
     if(bomb.depose && bombReady){
+
         ctx.drawImage(bombImage, posX, posY);
+
     }
+
+
 
 };
 
