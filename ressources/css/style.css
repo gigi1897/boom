@@ -1,16 +1,14 @@
+@font-face {
+    font-family: '8bit16';
+    src:url('/ressources/font/8bit16.ttf');
+
+
+}
+
+
 body {
 
-
-
- /* background: url(https://hdqwalls.com/download/8-bit-nature-lu-1920x1080.jpg) no-repeat center center fixed; */
-
-
-     background: url('/ressources/images/background_dark.png') no-repeat center center fixed;
-
-
-
-
-
+background: url('/ressources/images/background_dark.png') no-repeat center center fixed;
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -54,17 +52,39 @@ footer{
 
 #Instructionsleft{
 
+    font-family: '8bit16', Fallback, sans-serif;
     position:absolute;
-            color: white;
+    left: 10%;
+    top: 20%;
+    color:white;
+        text-align: right;
+
 
 }
 
+#Instructionsright{
 
-/*
-#sign{
+    font-family: '8bit16', Fallback, sans-serif;
+    position:absolute;
+    right: 5%;
+    top: 20%;
+    color:white;
+            text-align: left;
 
-Position:absolute
-left:100px
-top:15px
-    }
-*/
+
+
+}
+
+h2{
+
+    color: #FCCE5B;
+    padding-bottom: 5%;
+
+}
+
+footer{
+
+        font-family: '8bit16', Fallback, sans-serif;
+
+
+}
