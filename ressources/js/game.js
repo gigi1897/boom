@@ -16,6 +16,35 @@ bgImage.onload = function () {
 bgImage.src = "ressources/images/background.png";
 
 
+
+/*
+//bonuses
+
+//bonus vitesse
+var b_speedReady = false;
+var b_speedImage = new Image();
+b_speedImage.onload = function () {
+	b_speedReady = true;
+};
+b_speedImage.src = "ressources/images/bonuses/speed.png;
+
+//bonus dégât
+var b_damageReady = false;
+var b_damageImage = new Image();
+b_damageImage.onload = function () {
+	b_damageReady = true;
+};
+b_damageImage.src = "ressources/images/bonuses/damage.png;
+
+//bonus bombe
+var b_moreReady = false;
+var b_moreImage = new Image();
+b_moreImage.onload = function () {
+	b_moreReady = true;
+};
+b_moreImage.src = "ressources/images/bonuses/more.png;
+*/
+
 // Hero image
 var heroReady = false;
 var heroImage = new Image();
@@ -160,8 +189,8 @@ var update = function (modifier) {
         //if(bombsonmap <= autorizedbombs){
 
             //on renseigne le bloc touché (va servir pour la matrice)
-            numblocX = parseInt(hero.x/32);
-            numblocY = parseInt(hero.y/32);
+            numblocX = parseInt((hero.x+16)/32);
+            numblocY = parseInt((hero.y+16)/32);
 
             //on centre la bombe
             posX = numblocX * 32;
@@ -180,7 +209,31 @@ var update = function (modifier) {
 
             //bloc destructible à gauche ?
             if(indestructibleMap[ligne][colonne-1]==2){
+
+                var alea = Math.floor((Math.random() * 20) + 1);
+
+                /*
+                if (alea=1){
+                    //on casse le bloc, avec une chance d'avoir le bonus de vitesse
+                    indestructibleMap[ligne][colonne-1]=0;
+
+
+                }
+                else if (alea=2){
+                    //on casse le bloc, avec une chance d'avoir le bonus de dégat
+                    indestructibleMap[ligne][colonne-1]=0;
+                }
+                else if (alea=3){
+                    //on casse le bloc, avec une chance d'avoir le bonus d'une bombe supp
+                    indestructibleMap[ligne][colonne-1]=0;
+                }
+                */
+
+
+
+                //on casse le bloc, avec une chance d'avoir un bonus aléatoire
                indestructibleMap[ligne][colonne-1]=0;
+
             }
 
             //bloc destructible à droite ?
@@ -219,8 +272,8 @@ var update = function (modifier) {
         hero.y = 32;
 
     //bas de la map
-    if(hero.y >= 416-64 )
-        hero.y = 355;
+    if(hero.y >= 358 )
+        hero.y = 358;
 
 
 
@@ -264,32 +317,6 @@ var update = function (modifier) {
 // Draw everything
 var render = function () {
 
-    /*
-
-    //on met en place le décor indestructible
-    if(blocReady){
-        var x = 0;
-        while (x <= mapwidth) {
-            //on place les blocs horizontaux en bord
-            ctx.drawImage(blocImage,x,0);
-            ctx.drawImage(blocImage,x,mapheight-32);
-            x=x+32;
-        }
-        x = 0;
-        while (x  <= mapheight) {
-            //on place les blocs verticaux en bord
-            ctx.drawImage(blocImage,0,x);
-            ctx.drawImage(blocImage,mapwidth-32,x);
-            x=x+32;
-        }
-    }
-
-    */
-
-
-
-
-
     //Place le décor
     if(blocdestructibleReady && blocReady && grassReady){
         var AxeX = 0;
@@ -326,6 +353,24 @@ var render = function () {
     if(bombReady){
         ctx.drawImage(bombImage, bomb.x, bomb.y);
     }
+
+    /*
+
+    if(b_damageReady){
+        ctx.drawImage(b_damageImage);
+    }
+
+    if(b_moreReady){
+        ctx.drawImage(b_moreImage);
+    }
+
+    if(b_speedReady){
+        ctx.drawImage(b_speedImage);
+    }
+
+*/
+
+
 
     //Draw Bomb
     if(bomb.depose && bombReady){

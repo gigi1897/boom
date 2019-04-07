@@ -1,0 +1,70 @@
+body {
+
+
+
+ /* background: url(https://hdqwalls.com/download/8-bit-nature-lu-1920x1080.jpg) no-repeat center center fixed; */
+
+
+     background: url('/ressources/images/background_dark.png') no-repeat center center fixed;
+
+
+
+
+
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+
+
+}
+
+
+#game  {
+
+    margin: auto;
+    text-align: center;
+
+
+}
+
+#titre{
+    margin: auto;
+    text-align: center;
+    padding-bottom: 2%;
+}
+
+
+footer{
+
+    padding-top: 5%;
+    margin: auto;
+    text-align: center;
+    font-family:
+
+}
+
+#Git{
+        /*color: #fcce5b;*/
+            color: white;
+
+}
+
+#Instructionsleft{
+
+    position:absolute;
+            color: white;
+
+}
+
+
+/*
+#sign{
+
+Position:absolute
+left:100px
+top:15px
+    }
+*/
