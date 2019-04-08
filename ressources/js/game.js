@@ -78,6 +78,7 @@ var bombImage = new Image();
 bombImage.onload = function () {
 	bombReady = true;
 };
+
 bombImage.src = "ressources/images/labombe.png";
 
 
@@ -201,12 +202,13 @@ var update = function (modifier) {
 
         //on vérifie si le joueur peut poser une bombe
 
-        // il a le droit d'en poser 2, mais l'instanciation ne fonctionne pas
-        //if(bombsonmap <= autorizedbombs){
 
             //on renseigne le bloc touché (va servir pour la matrice)
             numblocX = parseInt((hero.x+16)/32);
             numblocY = parseInt((hero.y+16)/32);
+
+            //on place une bombe dans la matrice (ici plutot un bonus)
+            indestructibleMap[numblocY][numblocX]=9;
 
             //on centre la bombe
             posX = numblocX * 32;
@@ -314,13 +316,11 @@ var update = function (modifier) {
 
             //si la case active est un bonus, alors on le remplace par du gazon et on augmente la vitesse du joueur
             if ((indestructibleMap[index_ligne][index_colonne])==3){
-
                 indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
-
                 hero.speed+=25;
-
-
             }
+
+
 
             //autres bonus
             /*
@@ -363,6 +363,14 @@ var update = function (modifier) {
                 }
 	        }
 
+            if((indestructibleMap[i][j] == 9) && (hero.bloque)){
+                if (hero.x <= (blocdes.x + 32) && blocdes.x <= (hero.x + 23) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + 23)) {
+                    hero.x = XBefore;
+                    hero.y = YBefore;
+                }
+	        }
+
+
             AxeX += 32;
         }
         AxeY += 32;
@@ -396,9 +404,13 @@ var render = function () {
                     case 3:
                         ctx.drawImage(b_speedImage, AxeX, AxeY);
                         break;
-                    case 4:
-                        ctx.drawImage(b_damagedReady, AxeX, AxeY);
+
+                    //la bombe
+                    case 9:
+
+                        ctx.drawImage(bombImage, AxeX, AxeY);
                         break;
+
                 }
                 AxeX += 32;
 			}
@@ -409,15 +421,17 @@ var render = function () {
 
 
 
+
+
+
     //Draw hero
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
 
-    //Draw bomb
-    if(bombReady){
-        ctx.drawImage(bombImage, bomb.x, bomb.y);
-    }
+
+
+
 
 
     /*
@@ -438,18 +452,19 @@ var render = function () {
 
 
 
-    //Draw Bomb
-    if(bomb.depose && bombReady){
-
-        ctx.drawImage(bombImage, posX, posY);
-
-    }
 
 
 
 };
 
 
+
+//on dessine un truc
+    //Draw Bomb
+    if(bomb.depose && bombReady){
+        ctx.drawImage(bombImage, posX, posY);
+        console.log()
+    }
 
 
 
