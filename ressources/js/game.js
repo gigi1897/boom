@@ -15,8 +15,8 @@ bgImage.onload = function () {
 };
 bgImage.src = "ressources/images/background.png";
 
-//images des bonus
 
+//images des bonus
 //image bonus vitesse
 var b_speedReady = false;
 var b_speedImage = new Image();
@@ -32,6 +32,14 @@ b_damageImage.onload = function () {
 	b_damagedReady = true;
 };
 b_damageImage.src = "ressources/images/bonuses/damage.png";
+
+//image bonus addbomb
+var b_addbombReady = false;
+var b_addbombImage = new Image();
+b_addbombImage.onload = function () {
+	b_addbombReady = true;
+};
+b_addbombImage.src = "ressources/images/bonuses/more.png";
 
 
 
@@ -87,6 +95,7 @@ var hero = {
 	speed: 60,// movement in pixels per second
     x: 32,
 	y: 32,
+    rayon:1,
 };
 
 var speedbonus = {
@@ -101,7 +110,6 @@ var bombsonmap = 0;
 
 //nombre de bombes que le joueur a le droit de poser en même temps
 var autorizedbombs = 2;
-
 
 
 //bomb
@@ -123,6 +131,8 @@ var numblocY = 0;
 //0 => nothing
 //1 => indestructible bloc
 //2 => destrusctible bloc
+
+//9 => bombe
 
 //3 => bonus de vitesse !
 //4 = >bonus de dégât !
@@ -156,7 +166,6 @@ addEventListener("keydown", function (e) {
 addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
-
 
 
 // Reset the game
@@ -219,72 +228,99 @@ var update = function (modifier) {
 
             //EXPLOSION DE LA BOMBE - CODE A DEPLACER !!!
             //grace à la matrice, on contrôle si un bloc destructible se trouve à gauche, droite, haut ou bas
-
             var ligne   =   numblocY  ;
             var colonne =   numblocX  ;
 
 
-            //bloc destructible à gauche ?
-            if(indestructibleMap[ligne][colonne-1]==2){
+            //algo destruction de blocs A AMELIORER
+            //on doit tester les blocs à gauche, droite, haut et bas de la bombe qui explose.
 
-                var alea = Math.floor((Math.random() * 10) + 1);
 
-                if (alea==1){
-                    //on casse le bloc, avec une chance d'avoir le bonus de vitesse
-                    indestructibleMap[ligne][colonne-1]=3;
+            //EXPLOSION A DROITE ---------------------------------------------------------------
+            //on doit tester le rayon de la bombe
+            i = 0;
+            while (i < hero.rayon) {
+
+                //c'est un bloc indestructible, on sort de la boucle
+                if ((indestructibleMap[ligne][colonne+i+1]==1) || (indestructibleMap[ligne][colonne+i+1]==9) ){
+                    break;
                 }
-                else{
-                    //on teste ici les autres possibilités (bonus)
-                    indestructibleMap[ligne][colonne-1]=0;
+
+                //c'est une bloc destructible, on le casse
+                if(indestructibleMap[ligne][colonne+i+1]==2){
+                    indestructibleMap[ligne][colonne+i+1]=0; //on pète le mur sans rien faire pop
                 }
-            }
 
-            //bloc destructible à droite ?
-            if(indestructibleMap[ligne][colonne+1]==2){
-
-                var alea = Math.floor((Math.random() * 10) + 1);
-
-                if (alea==1){
-                    //on casse le bloc, avec une chance d'avoir le bonus de vitesse
-                    indestructibleMap[ligne][colonne+1]=3;
-                }
-                else{
-                    //on teste ici les autres possibilités (bonus)
-                    indestructibleMap[ligne][colonne+1]=0;
-                }
-            }
-
-            //bloc destructible en haut ?
-            if(indestructibleMap[ligne+1][colonne]==2){
-
-                var alea = Math.floor((Math.random() * 10) + 1);
-
-                if (alea==1){
-                    //on casse le bloc, avec une chance d'avoir le bonus de vitesse
-                    indestructibleMap[ligne+1][colonne]=3;
-                }
-                else{
-                    //on teste ici les autres possibilités (bonus)
-                    indestructibleMap[ligne+1][colonne]=0;
-                }
-            }
-
-            //bloc destructible en bas ?
-            if(indestructibleMap[ligne-1][colonne]==2){
-
-                var alea = Math.floor((Math.random() * 10) + 1);
-
-                if (alea==1){
-                    //on casse le bloc, avec une chance d'avoir le bonus de vitesse
-                    indestructibleMap[ligne-1][colonne]=3;
-                }
-                else{
-                    //on teste ici les autres possibilités (bonus)
-                    indestructibleMap[ligne-1][colonne]=0;
+                //c'est du gazon, on étend le rayon de l'explosion
+                if(indestructibleMap[ligne][colonne+i+1]==0){
+                    i++;
                 }
             }
 
 
+            //EXPLOSION A GAUCHE ---------------------------------------------------------------
+            //on doit tester le rayon de la bombe
+            i = 0;
+            while (i < hero.rayon) {
+
+                //c'est un bloc indestructible, on sort de la boucle
+                if ((indestructibleMap[ligne][colonne-(i+1)]==1) || (indestructibleMap[ligne][colonne-(i+1)]==9) ){
+                    break;
+                }
+
+                //c'est une bloc destructible, on le casse
+                if(indestructibleMap[ligne][colonne-(i+1)]==2){
+                    indestructibleMap[ligne][colonne-(i+1)]=0; //on pète le mur sans rien faire pop
+                }
+
+                //c'est du gazon, on étend le rayon de l'explosion
+                if(indestructibleMap[ligne][colonne-(i+1)]==0){
+                    i++;
+                }
+            }
+
+
+            //EXPLOSION EN HAUT ---------------------------------------------------------------
+            //on doit tester le rayon de la bombe
+            i = 0;
+            while (i < hero.rayon) {
+
+                //c'est un bloc indestructible, on sort de la boucle
+                if ((indestructibleMap[ligne-(i+1)][colonne]==1) || (indestructibleMap[ligne-(i+1)][colonne]==9) ){
+                    break;
+                }
+
+                //c'est une bloc destructible, on le casse
+                if(indestructibleMap[ligne-(i+1)][colonne]==2){
+                    indestructibleMap[ligne-(i+1)][colonne]=0; //on pète le mur sans rien faire pop
+                }
+
+                //c'est du gazon, on étend le rayon de l'explosion
+                if(indestructibleMap[ligne-(i+1)][colonne]==0){
+                    i++;
+                }
+            }
+
+            //EXPLOSION EN BAS ---------------------------------------------------------------
+            //on doit tester le rayon de la bombe
+            i = 0;
+            while (i < hero.rayon) {
+
+                //c'est un bloc indestructible, on sort de la boucle
+                if ((indestructibleMap[ligne+(i+1)][colonne]==1) || (indestructibleMap[ligne+(i+1)][colonne]==9) ){
+                    break;
+                }
+
+                //c'est une bloc destructible, on le casse
+                if(indestructibleMap[ligne+(i+1)][colonne]==2){
+                    indestructibleMap[ligne+(i+1)][colonne]=0; //on pète le mur sans rien faire pop
+                }
+
+                //c'est du gazon, on étend le rayon de l'explosion
+                if(indestructibleMap[ligne+(i+1)][colonne]==0){
+                    i++;
+                }
+            }
 
 
 
@@ -314,13 +350,29 @@ var update = function (modifier) {
             var index_colonne=parseInt((hero.x+16)/32);;
             var index_ligne=parseInt((hero.y+16)/32);;
 
-            //si la case active est un bonus, alors on le remplace par du gazon et on augmente la vitesse du joueur
+            //si la case active est un bonus de vitesse, alors on le remplace par du gazon et on augmente la vitesse du joueur
             if ((indestructibleMap[index_ligne][index_colonne])==3){
+
                 indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
                 hero.speed+=25;
             }
 
 
+            //si la case active est un bonus de dégât, alors on le remplace par du gazon et on augmente la puissance du joueur
+            if ((indestructibleMap[index_ligne][index_colonne])==4){
+
+                indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
+                hero.rayon+=1; //on augmente le rayon d'explosion de la bombe
+            }
+
+            /*
+
+            //si la case active est un bonus de bombes, alors on le remplace par du gazon et on augmente le nombre de bombes du joueur
+            if ((indestructibleMap[index_ligne][index_colonne])==5){
+
+                indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
+            }
+            */
 
             //autres bonus
             /*
@@ -404,6 +456,11 @@ var render = function () {
                     case 3:
                         ctx.drawImage(b_speedImage, AxeX, AxeY);
                         break;
+
+                    case 4:
+                        ctx.drawImage(b_damageImage, AxeX, AxeY);
+                        break;
+
 
                     //la bombe
                     case 9:
