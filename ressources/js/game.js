@@ -134,9 +134,17 @@ var numblocY = 0;
 
 //9 => bombe
 
+//bonus CACHE
+
 //3 => bonus de vitesse !
-//4 = >bonus de dégât !
-//5 = >bonus de rayon d'explosion !
+//4 = >bonus de rayon d'explosion !
+//5 = >bonus...
+
+//bonus AFFICHE
+
+//6 => bonus de vitesse !
+//7 = >bonus de dégât !
+//8 = >bonus de rayon d'explosion !
 
 
 // index                  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
@@ -154,6 +162,33 @@ var indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1 ],  
                         [ 1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1 ],  // 11
                         [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1]]; //  12
 
+
+
+//on place 6 bonus de chaque (et peut-être 1 bonus ultra-spécial?)
+for (var k = 3;  k<= 4; k++) {
+
+    for (var j = 0; j < 6; j++) {
+
+        //aléatoire entre 3 et 13 (axe horizontal)
+        var aleaX = Math.floor(Math.random() * (13 - 3 + 1)) + 3;
+
+        //aléatoire entre 3 et 9 (axe vertical)
+        var aleaY = Math.floor(Math.random() * (9 - 3 + 1)) + 3;
+
+            if(indestructibleMap[aleaY][aleaX]==1){
+
+                aleaY+=1;
+
+            }else{
+
+                //on met ça dans la matrice
+                indestructibleMap[aleaY][aleaX]=k;
+
+            }
+        //console.log("Les coordonnées du bonus sont de " + aleaX + ":" + aleaY + " et contiennent le bonus " + k);
+
+    }
+}
 
 
 // Handle keyboard controls
@@ -247,14 +282,35 @@ var update = function (modifier) {
                 }
 
                 //c'est une bloc destructible, on le casse
-                if(indestructibleMap[ligne][colonne+i+1]==2){
+                else if(indestructibleMap[ligne][colonne+i+1]==2){
                     indestructibleMap[ligne][colonne+i+1]=0; //on pète le mur sans rien faire pop
                 }
 
                 //c'est du gazon, on étend le rayon de l'explosion
-                if(indestructibleMap[ligne][colonne+i+1]==0){
+                else if(indestructibleMap[ligne][colonne+i+1]==0 || indestructibleMap[ligne][colonne+i+1]==6 || indestructibleMap[ligne][colonne+i+1]==7){
                     i++;
                 }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne][colonne+i+1]==3){
+                    indestructibleMap[ligne][colonne+i+1]=6;
+                    i++;
+                }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne][colonne+i+1]==4){
+                    indestructibleMap[ligne][colonne+i+1]=7;
+                    i++;
+                }
+
+
+                else{
+
+                    break;
+                }
+
+
+
             }
 
 
@@ -269,14 +325,32 @@ var update = function (modifier) {
                 }
 
                 //c'est une bloc destructible, on le casse
-                if(indestructibleMap[ligne][colonne-(i+1)]==2){
+                else if(indestructibleMap[ligne][colonne-(i+1)]==2){
                     indestructibleMap[ligne][colonne-(i+1)]=0; //on pète le mur sans rien faire pop
                 }
 
                 //c'est du gazon, on étend le rayon de l'explosion
-                if(indestructibleMap[ligne][colonne-(i+1)]==0){
+                else if(indestructibleMap[ligne][colonne-(i+1)]==0 || indestructibleMap[ligne][colonne-(i+1)]==6 || indestructibleMap[ligne][colonne-(i+1)]==7){
                     i++;
                 }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne][colonne-(i+1)]==3){
+                    indestructibleMap[ligne][colonne-(i+1)]=6;
+                    i++;
+                }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne][colonne-(i+1)]==4){
+                    indestructibleMap[ligne][colonne-(i+1)]=7;
+                    i++;
+                }
+
+                else{
+
+                    break;
+                }
+
             }
 
 
@@ -291,14 +365,33 @@ var update = function (modifier) {
                 }
 
                 //c'est une bloc destructible, on le casse
-                if(indestructibleMap[ligne-(i+1)][colonne]==2){
+                else if(indestructibleMap[ligne-(i+1)][colonne]==2){
                     indestructibleMap[ligne-(i+1)][colonne]=0; //on pète le mur sans rien faire pop
                 }
 
                 //c'est du gazon, on étend le rayon de l'explosion
-                if(indestructibleMap[ligne-(i+1)][colonne]==0){
+                else if(indestructibleMap[ligne-(i+1)][colonne]==0 || indestructibleMap[ligne-(i+1)][colonne]==6 || indestructibleMap[ligne-(i+1)][colonne]==7){
                     i++;
                 }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne-(i+1)][colonne]==3){
+                    indestructibleMap[ligne-(i+1)][colonne]=6;
+                    i++;
+                }
+
+               //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne-(i+1)][colonne]==4){
+                    indestructibleMap[ligne-(i+1)][colonne]=7;
+                    i++;
+                }
+
+
+                else{
+
+                    break;
+                }
+
             }
 
             //EXPLOSION EN BAS ---------------------------------------------------------------
@@ -312,14 +405,32 @@ var update = function (modifier) {
                 }
 
                 //c'est une bloc destructible, on le casse
-                if(indestructibleMap[ligne+(i+1)][colonne]==2){
+                else if(indestructibleMap[ligne+(i+1)][colonne]==2){
                     indestructibleMap[ligne+(i+1)][colonne]=0; //on pète le mur sans rien faire pop
                 }
 
                 //c'est du gazon, on étend le rayon de l'explosion
-                if(indestructibleMap[ligne+(i+1)][colonne]==0){
+                else if(indestructibleMap[ligne+(i+1)][colonne]==0 || indestructibleMap[ligne+(i+1)][colonne]==6 || indestructibleMap[ligne+(i+1)][colonne]==7){
                     i++;
                 }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne+(i+1)][colonne]==3){
+                    indestructibleMap[ligne+(i+1)][colonne]=6;
+                    i++;
+                }
+
+                //si c'est un bonus, on remplace par le bonus affiche
+                else if(indestructibleMap[ligne+(i+1)][colonne]==4){
+                    indestructibleMap[ligne+(i+1)][colonne]=7;
+                    i++;
+                }
+
+                else{
+
+                    break;
+                }
+
             }
 
 
@@ -351,7 +462,7 @@ var update = function (modifier) {
             var index_ligne=parseInt((hero.y+16)/32);;
 
             //si la case active est un bonus de vitesse, alors on le remplace par du gazon et on augmente la vitesse du joueur
-            if ((indestructibleMap[index_ligne][index_colonne])==3){
+            if ((indestructibleMap[index_ligne][index_colonne])==6){
 
                 indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
                 hero.speed+=25;
@@ -359,7 +470,7 @@ var update = function (modifier) {
 
 
             //si la case active est un bonus de dégât, alors on le remplace par du gazon et on augmente la puissance du joueur
-            if ((indestructibleMap[index_ligne][index_colonne])==4){
+            if ((indestructibleMap[index_ligne][index_colonne])==7){
 
                 indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
                 hero.rayon+=1; //on augmente le rayon d'explosion de la bombe
@@ -453,13 +564,23 @@ var render = function () {
                         ctx.drawImage(grassImage, AxeX, AxeY);
                         break;
 
+
                     case 3:
-                        ctx.drawImage(b_speedImage, AxeX, AxeY);
+                        ctx.drawImage(blocdestructibleImage, AxeX, AxeY);
                         break;
 
                     case 4:
+                        ctx.drawImage(blocdestructibleImage, AxeX, AxeY);
+                        break;
+
+                    case 6:
+                        ctx.drawImage(b_speedImage, AxeX, AxeY);
+                        break;
+
+                    case 7:
                         ctx.drawImage(b_damageImage, AxeX, AxeY);
                         break;
+
 
 
                     //la bombe
