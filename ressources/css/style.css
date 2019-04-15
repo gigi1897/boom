@@ -1,0 +1,65 @@
+@font-face {
+    font-family: '8bit16';
+    src:url('/ressources/font/8bit16.ttf');
+}
+
+
+body {
+    background: url('/ressources/images/background_dark.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+#game  {
+    margin: auto;
+    text-align: center;
+}
+
+#titre{
+    margin: auto;
+    text-align: center;
+    padding-bottom: 2%;
+}
+
+
+footer{
+    padding-top: 5%;
+    margin: auto;
+    text-align: center;
+    font-family:
+}
+
+#Git{
+    color: white;
+}
+
+#Instructionsleft{
+    font-family: '8bit16', Fallback, sans-serif;
+    position:absolute;
+    left: 10%;
+    top: 20%;
+    color:white;
+    text-align: right;
+
+}
+
+#Instructionsright{
+    font-family: '8bit16', Fallback, sans-serif;
+    position:absolute;
+    right: 5%;
+    top: 20%;
+    color:white;
+    text-align: left;
+}
+
+h2{
+    color: #FCCE5B;
+    padding-bottom: 5%;
+}
+
+footer{
+    font-family: '8bit16', Fallback, sans-serif;
+}
