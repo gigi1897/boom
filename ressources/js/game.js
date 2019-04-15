@@ -135,22 +135,24 @@ indestr.  |     0   |
 ---------------------
 nothing   |     1   |
 ---------------------
-nothing   |     2   |
+destruc.  |     2   |
 ---------------------
-nothing   |     3   |
+bonus vit.|     3   |
 ---------------------
-nothing   |     4   |
+bonus expl|     4   |
 ---------------------
-nothing   |     5   |
+bonus     |     5   |
 ---------------------
-nothing   |     6   |
+bonus vit.|     6   |
 ---------------------
-nothing   |     7   |
+bonus expl|     7   |
 ---------------------
 nothing   |     8   |
 ---------------------
 nothing   |     9   |
 ---------------------
+
+
 
 */
 //map decor
@@ -246,6 +248,7 @@ var update = function (modifier) {
 
 
     if (32 in keysDown){ // place bomb
+
 
 
 
