@@ -152,6 +152,7 @@ nothing   |     8   |
 nothing   |     9   |
 ---------------------
 
+
 */
 //map decor
 //0 => nothing
