@@ -4,8 +4,8 @@ var ctx = canvas.getContext("2d");
 canvas.width = 545;
 canvas.height = 416;
 
-var mapheight = canvas.height; //416px
-var mapwidth = canvas.width; //545 px
+const mapheight = canvas.height; //416px
+const mapwidth = canvas.width; //545 px
 
 // Generate background Image
 var bgReady = false;
@@ -97,6 +97,7 @@ var hero = {
 	y: 32,
     rayon:1,
     middlePos: 16,
+
 };
 
 var speedbonus = {
@@ -120,6 +121,12 @@ var bomb = {
     depose: false,
     id: 9,
 };
+
+var bloc = {
+    height: 32,
+    width: 32,
+}
+
 
 var posX = 0;
 var posY = 0;
@@ -246,7 +253,6 @@ var update = function (modifier) {
 	if (39 in keysDown) // Player holding right
         hero.x += hero.speed * modifier;
 
-
     if (32 in keysDown){ // place bomb
 
 
@@ -308,8 +314,8 @@ var update = function (modifier) {
     }
     //Collision avec les murs du terrain
     //mur droite
-    if(hero.x+24 >= 545-32 )
-        hero.x = 545-(32+24); // on fige le mouvement du joueur
+    if(hero.x+24 >= mapwidth-32 )
+        hero.x = mapwidth-(32+24); // on fige le mouvement du joueur
 
     //mur gauche
     if(hero.x <= 32 )
@@ -350,7 +356,7 @@ var update = function (modifier) {
             var blocloop = {};
             blocloop.x = i;
             blocloop.y = j;
-            if (hero.x <= (blocloop.x + 32) && blocloop.x <= (hero.x + 23) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + 23)) {
+            if (hero.x <= (blocloop.x + 32) && blocloop.x <= (hero.x + hero.height) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + hero.width)) {
                 hero.x = XBefore;
                 hero.y = YBefore;
 	        }
@@ -427,9 +433,8 @@ var render = function () {
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
+
 };
-
-
 
 // The main game loop
 var main = function () {
@@ -438,7 +443,6 @@ var main = function () {
 
 	update(delta / 1000);
 	render();
-
 	then = now;
 
 	// Request to do this again ASAP
