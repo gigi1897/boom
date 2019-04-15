@@ -153,6 +153,7 @@ nothing   |     9   |
 ---------------------
 
 
+
 */
 //map decor
 //0 => nothing
@@ -247,6 +248,7 @@ var update = function (modifier) {
 
 
     if (32 in keysDown){ // place bomb
+
 
 
 
