@@ -5,7 +5,7 @@
 
 
 body {
-    background: url('/ressources/images/background_dark.png') no-repeat center center fixed;
+    background: url('/ressources/images/background/background_dark.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
