@@ -1,69 +1,124 @@
-    <!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE HTML>
+<html>
 <head>
 
-      <link href="ressources/css/style.css" rel="stylesheet" >
+
+    <link href="ressources/css/index.css" rel="stylesheet" >
+
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
 </head>
 
 
-	<body>
 
-        <div id="titre">
-             <img src="ressources/images/logoBoom_small.png">
+
+<body>
+
+            <div id="titre">
+             <img src='ressources/images/logoBoom.png'  width="250px" height="146px">
         </div>
 
-        <div id="game">
-            <canvas id="canvas"></canvas>
+
+
+<h2>Select your player !</h2>
+<p id="instructions">Drag and drop your player in the dashed zone, give him a name click "PLAY" !</p>
+
+
+    <div id="8players">
+            <table align="center">
+                        <!--première ligne avec 4 persos-->
+                      <tr>
+                        <td>
+                            <div id="sprite1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite1.png" draggable="true" ondragstart="drag(event)" id="drag1" >
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sprite2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite2.png" draggable="true" ondragstart="drag(event)" id="drag2" >
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sprite3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite3.png" draggable="true" ondragstart="drag(event)" id="drag3" >
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sprite4" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite4.png" draggable="true" ondragstart="drag(event)" id="drag4" >
+                            </div>
+                        </td>
+                      </tr>
+
+                        <!--deuxième ligne-->
+
+                      <tr>
+                        <td>
+                            <div id="sprite5" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite5.png" draggable="true" ondragstart="drag(event)" id="drag5" >
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sprite6" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite6.png" draggable="true" ondragstart="drag(event)" id="drag6" >
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sprite7" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite7.png" draggable="true" ondragstart="drag(event)" id="drag7" >
+                            </div>
+                        </td>
+                        <td>
+                            <div id="sprite8" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    <img src="ressources/images/full sprites/sprite8.png" draggable="true" ondragstart="drag(event)" id="drag8" >
+                            </div>
+                        </td>
+                      </tr>
+
+            </table>
         </div>
 
-		<script type="text/javascript" src="ressources/js/game.js"></script>
 
-        <div id="Instructionsleft">
+    <form action="">
 
-            <h2>Player 1</h2>
+        <div id="PlayerSelecter">
 
-            <p>W, A, S, D - Move</p>
-            <img src="ressources/images/keys/wasd.svg" width="55%" height="55%">
+            <div id="player1choice">
+                <p>Player 1</p>
+                <p><input type="text" name="player1name" value="Enter your name" ></p>
 
+                <div id="player1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
 
-            <p>Shift - Plant the bomb</p>
-            <img src="ressources/images/keys/shift.svg" width="40%" height="1%">
+            <div id="player2choice">
+                <p>Player 2</p>
+                <p><input type="text" name="player1name" value="Enter your name"></p>
 
-
-            <p>Escape - Pause the game</p>
-            <img src="ressources/images/keys/esc.svg" width="19%" height="19%">
-
-        </div>
-
-        <div id="Instructionsright">
-
-            <h2>Player 2</h2>
-
-
-            <p>Arrow Keys - Move</p>
-            <img src="ressources/images/keys/move.svg" width="41%" height="41%">
-
-
-            <p>Spacebar - Plant the bomb</p>
-            <img src="ressources/images/keys/spacebar.svg" width="60%" height="48px">
-
-
-            <p>Escape - Pause the game</p>
-            <img src="ressources/images/keys/esc.svg" width="14%" height="14%">
+                <div id="player2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            </div>
 
         </div>
+    </form>
 
-    </body>
+    <!--fukx>
+<input id="playbutton" name="playbutton" type="submit" class="btn btn-outline-secondary center-block" value="PLAY" />
 
-
-    <footer>
-
-        <div>
-            Source code <a href="https://github.com/gigi1897/boom" target="_blank">here</a>
-        </div>
-
-    </footer>
+</fukx-->
 
 
+
+</body>
 </html>
