@@ -113,8 +113,8 @@ var autorizedbombs = 2;
 //bomb
 var bomb = {
     speed: 0,
-    depose: false
-
+    depose: false,
+    depositTime: null,
   };
 
 var posX = 0;
@@ -194,45 +194,45 @@ var reset = function () {
 
 function explosion(colonne, ligne){
     //monte - droite - bas - gauche
-        let col = [0, 1, 0, -1];
-        let lig = [-1,0, 1, 0];
+    let col = [0, 1, 0, -1];
+    let lig = [-1,0, 1, 0];
 
-        for(let j=0;j<4;j++){
-            let i = 1;
-            do{
-                //c'est un bloc indestructible, on sort de la boucle
-                if ((indestructibleMap[ligne+lig[j]][colonne+col[j]] == 1) || (indestructibleMap[ligne+lig[j]][colonne+col[j]] == 9) ){
-                    break;
-                }
+    for(let j=0;j<4;j++){
+        let i = 1;
+        do{
+            //c'est un bloc indestructible, on sort de la boucle
+            if ((indestructibleMap[ligne+lig[j]][colonne+col[j]] == 1) || (indestructibleMap[ligne+lig[j]][colonne+col[j]] == 9) ){
+                break;
+            }
 
-                //c'est une bloc destructible sans bonus derrière, on le casse
-                else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] == 2){
-                    indestructibleMap[ligne+lig[j]][colonne+col[j]] = 0;
-                }
+            //c'est une bloc destructible sans bonus derrière, on le casse
+            else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] == 2){
+                indestructibleMap[ligne+lig[j]][colonne+col[j]] = 0;
+            }
 
-                //c'est du gazon, on étend le rayon de l'explosion
-                else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] == 0 ||
-                        indestructibleMap[ligne+lig[j]][colonne+col[j]] == 6 ||
-                        indestructibleMap[ligne+lig[j]][colonne+col[j]]==7){
-                    i++;
-                }
+            //c'est du gazon, on étend le rayon de l'explosion
+            else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] == 0 ||
+                    indestructibleMap[ligne+lig[j]][colonne+col[j]] == 6 ||
+                    indestructibleMap[ligne+lig[j]][colonne+col[j]]==7){
+                i++;
+            }
 
-                //si c'est un bonus, on remplace par le bonus affiche
-                else if(indestructibleMap[ligne+lig[j]][colonne+col[j]]==3){
-                    indestructibleMap[ligne+lig[j]][colonne+col[j]]=6;
-                    i++;
-                }
+            //si c'est un bonus, on remplace par le bonus affiche
+            else if(indestructibleMap[ligne+lig[j]][colonne+col[j]]==3){
+                indestructibleMap[ligne+lig[j]][colonne+col[j]]=6;
+                i++;
+            }
 
-                //si c'est un bonus, on remplace par le bonus affiche
-                else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] == 4){
-                    indestructibleMap[ligne+lig[j]][colonne+col[j]] = 7;
-                    i++;
-                }
-                else{
-                    break;
-                }
-            }while(i < hero.rayon);
-        }
+            //si c'est un bonus, on remplace par le bonus affiche
+            else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] == 4){
+                indestructibleMap[ligne+lig[j]][colonne+col[j]] = 7;
+                i++;
+            }
+            else{
+                break;
+            }
+        }while(i < hero.rayon);
+    }
 }
 
 // Update game objects
@@ -257,15 +257,19 @@ var update = function (modifier) {
         numblocX = parseInt((hero.x+hero.middlePos)/distance);
         numblocY = parseInt((hero.y+hero.middlePos)/distance);
 
-        indestructibleMap[numblocY][numblocX]=9;
+        //placer la bombe dans la matrice
+        indestructibleMap[numblocY][numblocX] = 9;
 
         //on centre la bombe
         posX = numblocX * distance;
         posY = numblocY * distance;
 
-        bomb.depose = true;
-
-        explosion(numblocX, numblocY);
+        setTimeout(function(){
+            if(!(indestructibleMap[numblocY][numblocX] == 0)){
+                explosion(numblocX, numblocY);
+                indestructibleMap[numblocY][numblocX] = 0;
+            }
+        }, 300);
     }
 
 
@@ -288,13 +292,13 @@ var update = function (modifier) {
 
 
     //teste la position du joueur sur la matrice
-    var index_colonne=parseInt((hero.x+hero.middlePos)/distance);;
-    var index_ligne=parseInt((hero.y+hero.middlePos)/distance);;
+    var index_colonne=parseInt((hero.x+hero.middlePos)/distance);
+    var index_ligne=parseInt((hero.y+hero.middlePos)/distance);
 
     //si la case active est un bonus de vitesse, alors on le remplace par du gazon et on augmente la vitesse du joueur
-    if ((indestructibleMap[index_ligne][index_colonne])==6){
+    if ((indestructibleMap[index_ligne][index_colonne]) == 6){
 
-        indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
+        indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
         hero.speed+=25;
     }
 
