@@ -7,15 +7,6 @@ canvas.height = 416;
 var mapheight = canvas.height; //416px
 var mapwidth = canvas.width; //545 px
 
-// Generate background Image
-var bgReady = false;
-var bgImage = new Image();
-bgImage.onload = function () {
-	bgReady = true;
-};
-bgImage.src = "ressources/images/background.png";
-
-
 //images des bonus
 //image bonus vitesse
 var b_speedReady = false;
@@ -46,9 +37,22 @@ var heroReady = false;
 var heroImage = new Image();
 heroImage.onload = function () {
 	heroReady = true;
+
 };
+var imageWidth = 240;
+var imageHeight = 36;
+var frameWidth = 20;
+var frameHeight = 36;
 heroImage.src = "ressources/images/smallhero.png";
 
+var current_state = 'down';
+var current_frame = 0;
+var animations = {
+        down: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
+        left: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: 0}],
+        right: [{x: 6, y: 0}, {x: 7, y: 0}, {x: 8, y: 0}],
+        up: [{x: 9, y: 0}, {x: 10, y: 0}, {x: 11, y: 0}],
+    };
 
 //gazonbom Image
 var grassReady = false;
@@ -240,18 +244,22 @@ var update = function (modifier) {
     var XBefore = hero.x;
     var YBefore = hero.y;
     
-    if (38 in keysDown) // Player holding up
+    if (38 in keysDown){ // Player holding up
+        current_state = 'up';
         hero.y -= hero.speed * modifier;
-
-	if (37 in keysDown) // Player holding left
+    }
+	if (37 in keysDown){ // Player holding left
+        current_state = 'left';
         hero.x -= hero.speed * modifier;
-
-	if (40 in keysDown) // Player holding down
+    }
+	if (40 in keysDown){ // Player holding down
+        current_state = 'down';
         hero.y += hero.speed * modifier;
-
-	if (39 in keysDown) // Player holding right
+    }
+	if (39 in keysDown){ // Player holding right
+        current_state = 'right';
         hero.x += hero.speed * modifier;
-
+    }
     if (32 in keysDown){
 
         numblocX = parseInt((hero.x+hero.middlePos)/distance);
@@ -269,7 +277,7 @@ var update = function (modifier) {
                 explosion(numblocX, numblocY);
                 indestructibleMap[numblocY][numblocX] = 0;
             }
-        }, 300);
+        }, 3000);
     }
 
 
@@ -397,7 +405,19 @@ var render = function () {
 	if (heroReady) {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
+
+    /*if(heroReady){
+        console.log('test');
+        ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
+        current_frame += 1;
+        if (current_frame > 2) {
+            current_frame = 0;
+        }
+    }*/
 };
+
+
+
 
 
 // The main game loop
@@ -407,7 +427,6 @@ var main = function () {
 
 	update(delta / 1000);
 	render();
-
 	then = now;
 
 	// Request to do this again ASAP

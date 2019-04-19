@@ -26,99 +26,89 @@ function drop(ev) {
 
 
 <body>
+    <div id="titre">
+        <img src='ressources/images/logoBoom.png'  width="250px" height="146px">
+    </div>
 
-            <div id="titre">
-             <img src='ressources/images/logoBoom.png'  width="250px" height="146px">
-        </div>
-
-
-
-<h2>Select your player !</h2>
-<p id="instructions">Drag and drop your player in the dashed zone, give him a name click "PLAY" !</p>
+    <h2>Select your player !</h2>
+    <p id="instructions">Drag and drop your player in the dashed zone, give him a name click "PLAY" !</p>
 
 
     <div id="8players">
-            <table align="center">
-                        <!--première ligne avec 4 persos-->
-                      <tr>
-                        <td>
-                            <div id="sprite1" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite1.png" draggable="true" ondragstart="drag(event)" id="drag1" >
-                            </div>
-                        </td>
-                        <td>
-                            <div id="sprite2" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite2.png" draggable="true" ondragstart="drag(event)" id="drag2" >
-                            </div>
-                        </td>
-                        <td>
-                            <div id="sprite3" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite3.png" draggable="true" ondragstart="drag(event)" id="drag3" >
-                            </div>
-                        </td>
-                        <td>
-                            <div id="sprite4" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite4.png" draggable="true" ondragstart="drag(event)" id="drag4" >
-                            </div>
-                        </td>
-                      </tr>
+        <table align="center">
+            <!--première ligne avec 4 persos-->
+          <tr>
+            <td>
+                <div id="sprite1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite1.png" draggable="true" ondragstart="drag(event)" id="drag1" >
+                </div>
+            </td>
+            <td>
+                <div id="sprite2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite2.png" draggable="true" ondragstart="drag(event)" id="drag2" >
+                </div>
+            </td>
+            <td>
+                <div id="sprite3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite3.png" draggable="true" ondragstart="drag(event)" id="drag3" >
+                </div>
+            </td>
+            <td>
+                <div id="sprite4" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite4.png" draggable="true" ondragstart="drag(event)" id="drag4" >
+                </div>
+            </td>
+          </tr>
 
-                        <!--deuxième ligne-->
+            <!--deuxième ligne-->
 
-                      <tr>
-                        <td>
-                            <div id="sprite5" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite5.png" draggable="true" ondragstart="drag(event)" id="drag5" >
-                            </div>
-                        </td>
-                        <td>
-                            <div id="sprite6" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite6.png" draggable="true" ondragstart="drag(event)" id="drag6" >
-                            </div>
-                        </td>
-                        <td>
-                            <div id="sprite7" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite7.png" draggable="true" ondragstart="drag(event)" id="drag7" >
-                            </div>
-                        </td>
-                        <td>
-                            <div id="sprite8" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                    <img src="ressources/images/full sprites/sprite8.png" draggable="true" ondragstart="drag(event)" id="drag8" >
-                            </div>
-                        </td>
-                      </tr>
+          <tr>
+            <td>
+                <div id="sprite5" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite5.png" draggable="true" ondragstart="drag(event)" id="drag5" >
+                </div>
+            </td>
+            <td>
+                <div id="sprite6" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite6.png" draggable="true" ondragstart="drag(event)" id="drag6" >
+                </div>
+            </td>
+            <td>
+                <div id="sprite7" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite7.png" draggable="true" ondragstart="drag(event)" id="drag7" >
+                </div>
+            </td>
+            <td>
+                <div id="sprite8" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="ressources/images/full sprites/sprite8.png" draggable="true" ondragstart="drag(event)" id="drag8" >
+                </div>
+            </td>
+          </tr>
 
-            </table>
-        </div>
+        </table>
+    </div>
 
 
-    <form action="">
-
+    <form action="/game.html" method="post">
         <div id="PlayerSelecter">
-
             <div id="player1choice">
                 <p>Player 1</p>
-                <p><input type="text" name="player1name" value="Enter your name" ></p>
+                <p><input type="text" name="player1name" placeholder="Enter your name" required></p>
 
                 <div id="player1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
 
             <div id="player2choice">
                 <p>Player 2</p>
-                <p><input type="text" name="player1name" value="Enter your name"></p>
+                <p><input type="text" name="player2name" placeholder="Enter your name" required></p>
 
                 <div id="player2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
             </div>
 
         </div>
+        <div id="playButton">
+            <button type="submit">Let's play the game !</button>
+        </div>
     </form>
-
-    <!--fukx>
-<input id="playbutton" name="playbutton" type="submit" class="btn btn-outline-secondary center-block" value="PLAY" />
-
-</fukx-->
-
-
-
 </body>
 </html>

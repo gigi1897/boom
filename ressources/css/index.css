@@ -92,7 +92,6 @@ table{
 }
 
 h2{
-    padding-top: 3%;
     color:white;
     text-align: center;
 }
@@ -174,9 +173,6 @@ input{
     text-align: center;
 
   /*background-color : #d1d1d1;opacity: 0.5*/
-
-
-
 }
 
 
@@ -192,29 +188,15 @@ input{
     text-align: center;
     padding-top: 1%;
     margin-left: 5%;
-
-
-}
-
-
-
-footer{
-    /*
-    padding-top: 5%;
-    margin: auto;
-    text-align: center;
-    font-family:
-    */
-
-}
-
-h2{
-
-    padding-bottom: 5%;
 }
 
 footer{
     font-family: '8bit16', Fallback, sans-serif;
+}
+
+#playButton{
+    text-align: center;
+    margin-top: 30px;
 }
 
 
