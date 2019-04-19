@@ -1,0 +1,148 @@
+body {
+  margin:0;
+  font-family: Verdana,sans-serif;
+  font-size: 14px;
+}
+
+h1 { font-size: 1.10em; }
+h2 { font-size: 1.10em; margin-top: 0;}
+h3 { font-size: 1em; }
+
+a {
+  text-decoration: none;
+}
+
+
+/* all sections are off by default */
+body > section {
+  margin:1em;
+  display:none;
+}
+
+body.home > section#home,
+body.help > section#help,
+body.description > section#description,
+body.index > section#index,
+body.story > section#story,
+body.page3  > section#page3 { display:block; }
+
+/* nav highlightion rules */
+body.home #menu a[href="#home"],
+body.help #menu a[href="#help"],
+body.description #menu a[href="#description"],
+body.index #menu a[href="#index"],
+body.story #menu a[href="#story"],
+body.page3 #menu a[href="#page3"] { background-color: #555; }
+
+
+/*header*/
+body> header {
+  background-color: #04102A;
+  color: #f2f2f2;
+  box-shadow: 0px 5px 8px #ccc;
+  top:0;
+  width: 100%;
+}
+
+
+header h2{
+  display: inline-block;
+}
+
+#navigation {
+    background: white;
+    color: #04102A;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-weight: 700;
+}
+
+
+body .brand {
+  padding: 14px 12px;
+  text-align: left;
+}
+.brand a{
+  text-decoration: none;
+  font-weight: bold;
+  color: #f2f2f2;
+}
+.brand span{
+  display: block;
+}
+
+
+ul.topnav {
+  text-align: right;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #04102A;
+}
+
+ul.topnav li {
+  display:inline;
+}
+
+ul.topnav li a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  /*font-size: 1.2em;*/
+}
+
+ul.topnav li a:hover {background-color: #555;}
+ul.topnav li a.selected {background-color: #555;}
+ul.topnav li.icon {
+  display: none;
+}
+
+
+@media screen and (max-width:680px) {
+  ul.topnav {
+    width:100%;
+    top: 0;
+  }
+  ul.topnav li {display: none;}
+  ul.topnav li.icon {
+
+    display: inline-block;
+  }
+
+  body .brand {
+    /*float: left;*/
+    padding: 14px 0px 14px 50px;
+    text-align: left;
+  }
+  .brand span{
+    display: none;
+  }
+
+
+  ul.topnav.responsive {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-right: 30px;
+  }
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: left;
+  }
+
+
+
+}
