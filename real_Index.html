@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Canvas Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial;
+        }
+
+        /* Style tab links */
+        .tablink {
+            background-color: #555;
+            color: white;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            font-size: 17px;
+            width: 33%;
+        }
+
+        .tablink:hover {
+            background-color: #777;
+        }
+
+        #Help {
+            background-color: green;
+        }
+
+        #Game {
+            background-color: blue;
+        }
+    </style>
+    <script>
+        function openPage(pageName) {
+            if (pageName === 'help') {
+                $(document).ready(function() {
+                    $('#content').load("aide.html");
+                });
+            } else if (pageName === 'game') {
+                $('#content').load("index.html");
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <img src="ressources/images/logo.svg" width="15" height="15">
+    <button class="tablink" onclick="openPage('help')">Help</button>
+    <button class="tablink" onclick="openPage('game')">Game</button>
+
+    <div id="content">
+    </div>
+</body>
+
+</html>
