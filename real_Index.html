@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple Canvas Game</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial;
-        }
-
-        /* Style tab links */
-        .tablink {
-            background-color: #555;
-            color: white;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            font-size: 17px;
-            width: 33%;
-        }
-
-        .tablink:hover {
-            background-color: #777;
-        }
-
-        #Help {
-            background-color: green;
-        }
-
-        #Game {
-            background-color: blue;
-        }
-    </style>
-    <script>
-        function openPage(pageName) {
-            if (pageName === 'help') {
-                $(document).ready(function() {
-                    $('#content').load("aide.html");
-                });
-            } else if (pageName === 'game') {
-                $('#content').load("index.html");
-            }
-        }
-    </script>
 </head>
-
 <body>
-    <img src="ressources/images/logo.svg" width="15" height="15">
-    <button class="tablink" onclick="openPage('help')">Help</button>
-    <button class="tablink" onclick="openPage('game')">Game</button>
+    <header>
+        <h1>HES-SO Vs - 624-2 - HTML/CSS/JavaScript</h1>
+        <nav>
+            <!-- Hamburger -->
+            <ul id="menuList">
+                <li class="active">
+                    <a href="description.html">Description</a>
+                </li>
+                <li>
+                    <a href="maquettes_start.html">Game</a>
+                </li>
+                <li>
+                    <a href="mockup_start.html">Help</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Début zone pour votre contenu -->
+        <section id="articles">
+            <article>
+                <header>
+                    <h2>Description du projet</h2>
+                    <p>Par Steve Richard le 1/03/2019 à 13:00</p>
+                </header>
 
-    <div id="content">
-    </div>
+                <h3>But du jeu</h3>
+
+
+                <p>Boom est un jeu de stratégie dans lequel il faut exploser ses adversaires ! Pour se faire, le joueur dispose d'un arsenal de bombes, de bonus et d'atouts qu'il devra utiliser intelligemment et au bon moment. Le joueur évolue dans un labyrinthe constitué de blocs de pierre : certains blocs sont cassables, d'autres non. Les bombes permettent donc de casser les blocs cassables, mais n'ont aucun effet sur les blocs de pierre incassables.</p>
+
+
+                <img src="ressources\images\intro.png" class="resp">
+
+
+                <h3>Persos</h3>
+
+                <p>Plusieurs personnages sont disponibles. Ils ont les mêmes compétences, seul leur aspect visuel change.</p>
+
+
+                <h3>Règles du jeu</h3>
+
+                <p>Chaque joueur doit exploser son adversaire, il peut casser les blocs de pierre cassables placés sur la carte pour avancer. Lorsqu'un bloc est cassé, il peut contenir un bonus augmentant la puissance du joueur. Lorsque le joueur place une bombe, il doit faire attention à ne pas se faire coincer par celle-ci. Au contact du rayon d'explosion d'une bombe, le joueur touché meurt instantanément. Dans le mode multijoueur, chaque joueur dispose de 3 vies. </p>
+
+
+                <p>Le code source de l'application est disponible sur le <a href="https://github.com/gigi1897/boom/" target="_blank">github du projet</a>.</p>
+            </article>
+        </section>
+    </main>
 </body>
-
-</html>
