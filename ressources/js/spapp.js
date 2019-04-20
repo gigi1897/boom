@@ -163,3 +163,12 @@ function drop(ev) {
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
 }
+
+function checkValue(){
+    if( !($('#player1').is(':empty')) ) {
+        document.getElementById("formulaire").setAttribute("action","_layout.html#game");
+    }
+    if( !($('#player2').is(':empty')) ) {
+        document.getElementById("formulaire").setAttribute("action","_layout.html#game");
+    }
+}
