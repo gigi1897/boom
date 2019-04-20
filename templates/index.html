@@ -1,25 +1,11 @@
 <script>
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
 
-    function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
-    }
 </script>
 
-<div>
     <h2>Select your player !</h2>
     <p id="instructions">Drag and drop your player in the dashed zone, give him a name click "PLAY" !</p>
 
-
-    <div id="8players">
+    <div id="playersList">
         <table align="center">
             <!--première ligne avec 4 persos-->
           <tr>
@@ -74,7 +60,7 @@
     </div>
 
 
-    <form action="/game.html" method="post">
+    <form action="/game.html" method="get">
         <div id="PlayerSelecter">
             <div id="player1choice">
                 <p>Player 1</p>
@@ -92,7 +78,6 @@
 
         </div>
         <div id="playButton">
-            <button type="submit">Let's play the game !</button>
+            <button class="btn startGame">Start Game</button>
         </div>
     </form>
-</div>
