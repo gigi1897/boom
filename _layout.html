@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple Canvas Game</title>
-    <link href="ressources/css/app.css" rel="stylesheet" >
-
+    <link href="ressources/css/game.css" rel="stylesheet">
+    <link href="ressources/css/app.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
+
 <body>
     <header>
         <div id="titre">
-            <img src='ressources/images/logoBoom.png'  width="250px" height="146px">
+            <img src='ressources/images/logoBoom.png' width="250px" height="146px">
         </div>
         <nav>
             <ul class="menuList" id="menu">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#help">Help</a></li>
-              <li><a href="#index">Game</a></li>
-              <li><a href="#story">Story</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#help">Help</a></li>
+                <li><a href="#index">Game</a></li>
+                <li><a href="#story">Story</a></li>
             </ul>
         </nav>
     </header>
@@ -24,6 +27,54 @@
     <section id="help" src="templates/help.html"></section>
     <section id="index" src="templates/index.html"></section>
     <section id="story" src="templates/story.html"></section>
+    <section id="game" src="templates/game.html">
+        <div>
+            <div id="game">
+                <canvas id="canvas"></canvas>
+            </div>
+            <div id="Instructionsleft">
 
+                <h2>Player 1</h2>
+
+                <p>W, A, S, D - Move</p>
+                <img src="ressources/images/keys/wasd.svg" width="55%" height="55%">
+
+
+                <p>Shift - Plant the bomb</p>
+                <img src="ressources/images/keys/shift.svg" width="40%" height="1%">
+
+
+                <p>Escape - Pause the game</p>
+                <img src="ressources/images/keys/esc.svg" width="19%" height="19%">
+
+            </div>
+
+            <div id="Instructionsright">
+
+                <h2>Player 2</h2>
+
+
+                <p>Arrow Keys - Move</p>
+                <img src="ressources/images/keys/move.svg" width="41%" height="41%">
+
+
+                <p>Spacebar - Plant the bomb</p>
+                <img src="ressources/images/keys/spacebar.svg" width="60%" height="48px">
+
+
+                <p>Escape - Pause the game</p>
+                <img src="ressources/images/keys/esc.svg" width="14%" height="14%">
+
+            </div>
+        </div>
+    </section>
+    <footer>
+
+        <div>
+            Source code <a href="https://github.com/gigi1897/boom" target="_blank">here</a>
+        </div>
+
+    </footer>
     <script src="ressources/js/spapp.js"></script>
+    <script src="ressources/js/game.js"></script>
 </body>
