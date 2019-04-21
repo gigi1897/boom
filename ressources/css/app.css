@@ -7,8 +7,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+#headerImg{
+    width: 200px;
+    height: 100px;
+}
 header nav {
     display: inline-block;
+    font-size: 0.75em;
 }
 header li {
     float: left;
@@ -72,7 +77,8 @@ td{
     height: 100px;
     border: 2px dashed #bbb;
     text-align: center;
-    background-color:rgb(0,0,0);opacity:0.4
+    background-color:rgb(0,0,0);
+    opacity:0.2;
 }
 
 #player1[drop-active=true]
@@ -130,7 +136,44 @@ input{
   background: #FCCE5B;
   box-shadow: 0px 4px 0px #847c21;
 }
+/*Page game*/
+#game{
+    background: url('/ressources/images/background/midday.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#game{
+
+}
+#game  {
+    margin: auto;
+    text-align: center;
+}
+canvas{
+    margin-top: 30px;
+}
+#Instructionsleft{
+    position:absolute;
+    left: 10%;
+    top: 30%;
+    color:white;
+    text-align: right;
+
+}
+#Instructionsright{
+    position:absolute;
+    right: 5%;
+    top: 30%;
+    color:white;
+    text-align: left;
+}
+
 /*==========================================================================================================*/
+#Git{
+    color: white;
+}
 footer{
     padding-top: 5%;
     margin: auto;
@@ -149,6 +192,7 @@ h2 {
     color:black;
     text-align: center;
     margin: 0;
+    padding: 30px;
 }
 h3 {
     font-size: 1em;
