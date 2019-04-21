@@ -28,7 +28,10 @@
     <section id="index" src="templates/index.html"></section>
     <section id="story" src="templates/story.html"></section>
     <section id="game" src="templates/game.html">
-        <embed name="gameMusic" src="/ressources/sound/gameLoopable.mp3" loop="true" hidden="true" autostart="true">
+        <audio autoplay loop="true">
+            <source src="/ressources/sound/gameLoopable.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
         <div>
             <div id="game">
                 <canvas id="canvas"></canvas>
