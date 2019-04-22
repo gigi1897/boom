@@ -196,7 +196,7 @@ addEventListener("keyup", function (e) {
 
 // Reset the game
 var reset = function () {
-
+    main();
 };
 
 
@@ -207,6 +207,14 @@ function explosion(colonne, ligne){
     let lig = [-1,0, 1, 0];
     let numblocX = parseInt((hero.x+hero.middlePos)/distance);
     let numblocY = parseInt((hero.y+hero.middlePos)/distance);
+
+
+
+    if(ligne === numblocY && colonne === numblocX){
+        alert('mort !');
+        hero.cptLife--;
+    }
+
     for(let j=0;j<4;j++){
         let i = 1;
         do{
@@ -221,7 +229,11 @@ function explosion(colonne, ligne){
                 indestructibleMap[ligne+lig[j]][colonne+col[j]] = 0;
                 i++;
             }
-
+            else if(ligne+lig[j] === numblocY && colonne+col[j] === numblocX){
+                alert('mort');
+                hero.cptLife--;
+                i++;
+            }
             //c'est du gazon, on étend le rayon de l'explosion
             else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] === 0 ||
                     indestructibleMap[ligne+lig[j]][colonne+col[j]] === 6 ||
@@ -243,8 +255,9 @@ function explosion(colonne, ligne){
             else{
                 break;
             }
-        }while(i <= hero.rayon);
+        }while(i < hero.rayon);
     }
+
 }
 
 // Update game objects
@@ -419,6 +432,7 @@ var render = function () {
 
     //Draw hero
 	if (heroReady) {
+
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
 
