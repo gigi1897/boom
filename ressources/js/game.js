@@ -47,6 +47,7 @@ heroImage.src = "ressources/images/smallhero.png";
 
 var current_state = 'down';
 var current_frame = 0;
+
 var animations = {
         down: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
         left: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: 0}],
@@ -96,9 +97,11 @@ var hero = {
 	speed: 60,// movement in pixels per second
     x: 32,
 	y: 32,
-    rayon:1,
+    rayon:2,
     middlePos: 16,
     heigthPx: 23,
+    cptLife: 3,
+    droppedBomb: false,
 };
 
 var speedbonus = {
@@ -196,16 +199,20 @@ var reset = function () {
 
 };
 
+
+
 function explosion(colonne, ligne){
     //monte - droite - bas - gauche
     let col = [0, 1, 0, -1];
     let lig = [-1,0, 1, 0];
-
+    let numblocX = parseInt((hero.x+hero.middlePos)/distance);
+    let numblocY = parseInt((hero.y+hero.middlePos)/distance);
     for(let j=0;j<4;j++){
         let i = 1;
         do{
             //c'est un bloc indestructible, on sort de la boucle
-            if ((indestructibleMap[ligne+lig[j]][colonne+col[j]] === 1) || (indestructibleMap[ligne+lig[j]][colonne+col[j]] === 9) ){
+            if ((indestructibleMap[ligne+lig[j]][colonne+col[j]] === 1) ||
+                (indestructibleMap[ligne+lig[j]][colonne+col[j]] === 9) ){
                 break;
             }
 
@@ -218,7 +225,7 @@ function explosion(colonne, ligne){
             //c'est du gazon, on étend le rayon de l'explosion
             else if(indestructibleMap[ligne+lig[j]][colonne+col[j]] === 0 ||
                     indestructibleMap[ligne+lig[j]][colonne+col[j]] === 6 ||
-                    indestructibleMap[ligne+lig[j]][colonne+col[j]]===7){
+                    indestructibleMap[ligne+lig[j]][colonne+col[j]] === 7 ){
                 i++;
             }
 
@@ -262,26 +269,28 @@ var update = function (modifier) {
         hero.x += hero.speed * modifier;
     }
     if (32 in keysDown){
+        if(hero.droppedBomb === false){
+            hero.droppedBomb = true;
 
-        numblocX = parseInt((hero.x+hero.middlePos)/distance);
-        numblocY = parseInt((hero.y+hero.middlePos)/distance);
+            numblocX = parseInt((hero.x+hero.middlePos)/distance);
+            numblocY = parseInt((hero.y+hero.middlePos)/distance);
 
-        //placer la bombe dans la matrice
-        indestructibleMap[numblocY][numblocX] = 9;
 
-        //on centre la bombe
-        posX = numblocX * distance;
-        posY = numblocY * distance;
+            //placer la bombe dans la matrice
+            indestructibleMap[numblocY][numblocX] = 9;
+            //on centre la bombe
+            posX = numblocX * distance;
+            posY = numblocY * distance;
 
-        setTimeout(function(){
-            if(!(indestructibleMap[numblocY][numblocX] === 0)){
-                explosion(numblocX, numblocY);
-                indestructibleMap[numblocY][numblocX] = 0;
-            }
-        }, 3000);
+            setTimeout(function(){
+                if(!(indestructibleMap[numblocY][numblocX] === 0)){
+                    explosion(numblocX, numblocY);
+                    indestructibleMap[numblocY][numblocX] = 0;
+                    hero.droppedBomb = false;
+                }
+            }, 3000);
+        }
     }
-
-
 
     //mur droite
     if(hero.x+24 >= 513 )//545-32
@@ -413,17 +422,16 @@ var render = function () {
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
 
-    /*if(heroReady){
-        console.log('test');
-        ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
-        current_frame += 1;
-        if (current_frame > 2) {
-            current_frame = 0;
-        }
-    }*/
 };
 
-
+/*setInterval(function(){
+            console.log('tes');
+            ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
+            current_frame += 1;
+                if (current_frame > 2) {
+                    current_frame = 0;
+                }
+    }, 500);*/
 
 
 
