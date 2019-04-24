@@ -1,0 +1,10 @@
+{
+    "speed": 60,
+    "x": 32,
+	"y": 32,
+    "middlePos": 16,
+    "heigthPx": 23,
+    "rayon":3,
+    "cptLife": 3,
+    "droppedBomb": false
+}

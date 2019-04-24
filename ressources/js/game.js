@@ -92,17 +92,8 @@ bombImage.onload = function () {
 bombImage.src = "ressources/images/labombe.png";
 
 
-// hero
-var hero = {
-	speed: 60,// movement in pixels per second
-    x: 32,
-	y: 32,
-    rayon:2,
-    middlePos: 16,
-    heigthPx: 23,
-    cptLife: 3,
-    droppedBomb: false,
-};
+const jsonPath = "ressources/json/heroConfig.json";
+var hero = deserialiseJSON(jsonPath);
 
 var speedbonus = {
     x:0,
@@ -445,6 +436,20 @@ var render = function () {
 	}
 
 };
+
+function deserialiseJSON(file){
+    var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': file,
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        return json;
+}
 
 /*setInterval(function(){
             console.log('tes');
