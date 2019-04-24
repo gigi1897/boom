@@ -1,9 +1,10 @@
-/*nav*/
+/*header*/
 @font-face {
     font-family: '8bit16';
     src:url('/ressources/font/8bit16.ttf');
 }
 *{
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
@@ -30,45 +31,36 @@ header li a {
     color: white;
 }
 #titre{
-    margin: auto;
     text-align: center;
 }
 
-/*Page index*/
+/*section index*/
 #index{
-    background: url('/ressources/images/background/morning.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url('/ressources/images/background/morning.jpg');
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-attachment: fixed;
 }
 table, th, td {
- border: 0px solid black;
+    border: 0px solid black;
+    margin-left:auto;
+    margin-right:auto;
 }
-
+#index>*{
+    padding: 20px;
+}
 #playersList{
     text-align: center;
 }
-
-#instructions{
-    text-align: center;
-    color:#FCCE5B;
-}
-
 td{
     width: 70px;
     height: 70px;
     text-align: center;
     background-image:url('/ressources/images/background/whitetrans.png');
-}
-
-#div1 {
-  float: left;
-  width: 70px;
-  height: 70px;
-
-  padding: 10px;
-  border: 0px solid black;
 }
 
 #player1, #player2{
@@ -86,7 +78,6 @@ td{
 }
 
 input{
-    font-size:120%;
     text-align: center;
 }
 
@@ -94,6 +85,9 @@ input{
     text-align: center;
     padding-top: 1%;
     margin-right: 5%;
+}
+#player1choice>*, #player2choice>*{
+    padding: 5px;
 }
 #player2choice{
     text-align: center;
@@ -136,23 +130,32 @@ input{
   background: #FCCE5B;
   box-shadow: 0px 4px 0px #847c21;
 }
-/*Page game*/
-#game{
-    background: url('/ressources/images/background/midday.png') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-#game{
 
+
+/*section game*/
+#game{
+    background: url('/ressources/images/background/midday.png');
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-attachment: fixed;
 }
-#game  {
+#gameCanvas  {
     margin: auto;
     text-align: center;
 }
+#game>*{
+    padding: 20px;
+}
+#instructions{
+    text-align: center;
+    color:#FCCE5B;
+}
 canvas{
-    margin-top: 30px;
+    margin-top: 20px;
 }
 #Instructionsleft{
     position:absolute;
@@ -160,7 +163,9 @@ canvas{
     top: 30%;
     color:white;
     text-align: right;
-
+}
+#Instructionsleft>p, #Instructionsright>p{
+    padding:15px;
 }
 #Instructionsright{
     position:absolute;
@@ -170,19 +175,53 @@ canvas{
     text-align: left;
 }
 
+/*section home*/
+#home, #help, #story{
+    margin: 20px;
+}
+#home,#help,#story>div>*{
+    padding-bottom: 15px;
+    font-family: "Arial";
+}
+#introHomeImg{
+    height: 320px;
+    width: 340px;
+}
+
+.centerImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 /*==========================================================================================================*/
 #Git{
     color: white;
 }
+html{
+    height:100%;
+}
 footer{
-    padding-top: 5%;
-    margin: auto;
-    text-align: center;
-    font-family:
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:100px;
+  background-color: #04102A;
+  color: white;
+  text-align: center;
+    padding: 10px;
 }
 body {
-  margin:0;
+  min-height:100%;
+  position:relative;
   font-family: '8bit16', Fallback, sans-serif;
+}
+
+body::after{
+    content:'';
+    display:block;
+    height:100px;
 }
 
 h1 {
@@ -191,7 +230,6 @@ h1 {
 h2 {
     color:black;
     text-align: center;
-    margin: 0;
     padding: 30px;
 }
 h3 {
@@ -200,12 +238,12 @@ h3 {
 
 a {
   text-decoration: none;
+  font-family: '8bit16', Fallback, sans-serif;
 }
 
 
 /* all sections are off by default */
 body > section {
-  margin:1em;
   display:none;
 }
 
@@ -215,7 +253,6 @@ body.index > section#index,
 body.story > section#story,
 body.game > section#game{
     display:block;
-    margin: 0;
 }
 
 /* nav highlightion rules */
@@ -232,10 +269,7 @@ body> header {
   background-color: #04102A;
   color: #f2f2f2;
   box-shadow: 0px 5px 8px #ccc;
-  top:0;
-  width: 100%;
 }
-
 
 header h2{
   display: inline-block;
@@ -246,10 +280,7 @@ header h2{
     color: #04102A;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    font-weight: 700;
 }
-
 
 body .brand {
   padding: 14px 12px;
@@ -268,8 +299,6 @@ body .brand {
 ul.topnav {
   text-align: right;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
   background-color: #04102A;
 }
