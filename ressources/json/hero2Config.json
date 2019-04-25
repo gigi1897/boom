@@ -1,0 +1,13 @@
+{
+    "speed": 60,
+    "x": 485,
+	"y": 350,
+    "middlePos": 16,
+    "heigthPx": 23,
+    "rayon":3,
+    "cptLife": 3,
+    "droppedBomb": false,
+    "deposedBomb": 0,
+    "bonusSpeed": 0,
+    "bonusRayon": 0
+}
