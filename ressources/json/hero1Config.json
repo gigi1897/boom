@@ -6,5 +6,8 @@
     "heigthPx": 23,
     "rayon":3,
     "cptLife": 3,
-    "droppedBomb": false
+    "droppedBomb": false,
+    "deposedBomb": 0,
+    "bonusSpeed": 0,
+    "bonusRayon": 0
 }

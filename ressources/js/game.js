@@ -53,7 +53,7 @@ var animations = {
         left: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: 0}],
         right: [{x: 6, y: 0}, {x: 7, y: 0}, {x: 8, y: 0}],
         up: [{x: 9, y: 0}, {x: 10, y: 0}, {x: 11, y: 0}],
-    };
+};
 
 //gazonbom Image
 var grassReady = false;
@@ -88,61 +88,32 @@ var bombImage = new Image();
 bombImage.onload = function () {
 	bombReady = true;
 };
-
 bombImage.src = "ressources/images/labombe.png";
 
 
-const jsonPath = "ressources/json/heroConfig.json";
+const jsonPath = "ressources/json/hero1Config.json";
 var hero = deserialiseJSON(jsonPath);
 
-var speedbonus = {
-    x:0,
-    y:0,
-}
+const jsonPathHero2 = "ressources/json/hero2Config.json";
+var hero2 = deserialiseJSON(jsonPathHero2);
 
-
-//nombre de bombes posées sur le terrain
-var bombsonmap = 0;
-
-//nombre de bombes que le joueur a le droit de poser en même temps
-var autorizedbombs = 2;
-
-
-//bomb
-var bomb = {
-    speed: 0,
-    depose: false,
-    depositTime: null,
-  };
-
-var posX = 0;
-var posY = 0;
-
-var numblocX = 0;
-var numblocY = 0;
 
 const distance = 32;
 
-//map decor
+//indice matrice
 //0 => nothing
 //1 => indestructible bloc
 //2 => destrusctible bloc
-
-//9 => bombe
-
-//bonus CACHE
 //3 => bonus de vitesse !
 //4 = >bonus de rayon d'explosion !
 //5 = >bonus...
-
-//bonus AFFICHE
 //6 => bonus de vitesse !
 //7 = >bonus de dégât !
 //8 = >bonus de rayon d'explosion !
-
+//9 => bombe
 
 // index                  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
-var indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1 ],  // 0
+const indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1 ],  // 0
                         [ 1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1 ],  // 1
                         [ 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1 ],  // 2
                         [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,1 ],  // 3
@@ -187,9 +158,8 @@ addEventListener("keyup", function (e) {
 
 // Reset the game
 var reset = function () {
-    main();
-};
 
+};
 
 
 function explosion(colonne, ligne){
@@ -202,61 +172,62 @@ function explosion(colonne, ligne){
     let numblocY = parseInt((hero.y+hero.middlePos)/distance);
 
 
-
+    //joueur est sur la bombe
     if(ligne === numblocY && colonne === numblocX){
         alert('mort !');
         hero.cptLife--;
     }
 
 
-        for(let j=0;j<4;j++){
-            let i=1;
-            do{
-                //c'est un bloc indestructible, on sort de la boucle
-                if ((indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 1) ||
-                    (indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 9) ){
-                    break;
-                }
+    for(let j=0;j<4;j++){
+        let i=1;
+        do{
+            //c'est un bloc indestructible, on sort de la boucle
+            if ((indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 1) ||
+                (indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 9) ){
+                break;
+            }
 
-                //c'est une bloc destructible sans bonus derrière, on le casse
-                else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 2){
-                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] = 0;
-                    i++;
-                }
-                else if(ligne + (1*i*lig[j]) === numblocY && colonne +(1*i*col[j]) === numblocX){
-                    alert('mort');
-                    hero.cptLife--;
-                    i++;
-                }
-                //c'est du gazon, on étend le rayon de l'explosion
-                else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 0 ||
-                        indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 6 ||
-                        indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 7 ){
-                    i++;
-                }
+            //c'est une bloc destructible sans bonus derrière, on le casse
+            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 2){
+                indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] = 0;
+                i++;
+            }
+            //joueur est dans le rayon de la bombe
+            else if(ligne + (1*i*lig[j]) === numblocY && colonne +(1*i*col[j]) === numblocX){
+                alert('mort');
+                hero.cptLife--;
+                i++;
+            }
+            //c'est du gazon, on étend le rayon de l'explosion
+            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 0 ||
+                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 6 ||
+                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 7 ){
+                i++;
+            }
 
-                //si c'est un bonus, on remplace par le bonus affiche
-                else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])]===3){
-                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])]=6;
-                    i++;
-                }
+            //si c'est un bonus, on remplace par le bonus affiche
+            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])]===3){
+                indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])]=6;
+                i++;
+            }
 
-                //si c'est un bonus, on remplace par le bonus affiche
-                else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 4){
-                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] = 7;
-                    i++;
-                }
-                else{
-                    break;
-                }
-            }while(i <= hero.rayon);
-        }
+            //si c'est un bonus, on remplace par le bonus affiche
+            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 4){
+                indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] = 7;
+                i++;
+            }
+            else{
+                break;
+            }
+        }while(i <= hero.rayon);
+    }
 }
 
 // Update game objects
 var update = function (modifier) {
-    var XBefore = hero.x;
-    var YBefore = hero.y;
+    let XBefore = hero.x;
+    let YBefore = hero.y;
     
     if (38 in keysDown){ // Player holding up
         current_state = 'up';
@@ -275,18 +246,19 @@ var update = function (modifier) {
         hero.x += hero.speed * modifier;
     }
     if (32 in keysDown){
+
         if(!hero.droppedBomb){
+            //incrementation du cpt depose bomb
+            hero.deposedBomb++;
+            console.log(hero.deposedBomb);
             hero.droppedBomb = true;
 
-            numblocX = parseInt((hero.x+hero.middlePos)/distance);
-            numblocY = parseInt((hero.y+hero.middlePos)/distance);
+            let numblocX = parseInt((hero.x+hero.middlePos)/distance);
+            let numblocY = parseInt((hero.y+hero.middlePos)/distance);
 
 
             //placer la bombe dans la matrice
             indestructibleMap[numblocY][numblocX] = 9;
-            //on centre la bombe
-            posX = numblocX * distance;
-            posY = numblocY * distance;
 
             setTimeout(function(){
                 if(!(indestructibleMap[numblocY][numblocX] === 0)){
@@ -300,32 +272,22 @@ var update = function (modifier) {
         }
     }
 
-    //mur droite
-    if(hero.x+24 >= 513 )//545-32
-        hero.x = 489 ; //545-(32+24) on fige le mouvement du joueur
 
-    //mur gauche
-    if(hero.x <= distance )
-        hero.x = distance;
-
-    //plafond
-    if(hero.y <= distance )
-        hero.y = distance;
-
-    //bas de la map
-    if(hero.y >= 358 )
-        hero.y = 358;
 
 
     //teste la position du joueur sur la matrice
-    var index_colonne=parseInt((hero.x+hero.middlePos)/distance);
-    var index_ligne=parseInt((hero.y+hero.middlePos)/distance);
+    var index_colonne = parseInt((hero.x+hero.middlePos)/distance);
+    var index_ligne = parseInt((hero.y+hero.middlePos)/distance);
 
 
     //si la case active est un bonus de vitesse, alors on le remplace par du gazon et on augmente la vitesse du joueur
     if ((indestructibleMap[index_ligne][index_colonne]) === 6){
         let bonuSound = new Audio("/ressources/sound/bonus.mp3");
         bonuSound.play();
+
+        //incrémente le cpt bonus speed
+        hero.bonusSpeed++;
+        console.log("cpt speed: " + hero.bonusSpeed);
         indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
         hero.speed+=25;
 
@@ -336,54 +298,16 @@ var update = function (modifier) {
     if ((indestructibleMap[index_ligne][index_colonne])===7){
         let bonuSound = new Audio("/ressources/sound/bonus.mp3");
         bonuSound.play();
+
+        //incrémente le cpt bonus rayon
+        hero.bonusRayon++;
+        console.log("cpt rayon: " + hero.bonusRayon);
         indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
         hero.rayon += 1; //on augmente le rayon d'explosion de la bombe
     }
 
-    //détection de collision avec les blocs indestructibles et destructibles
-    for (var i = 64; i < mapwidth-64; i=i+64) {
-        for (var j = 64; j< mapheight-64; j=j+64){
-            var blocloop = {};
-            blocloop.x = i;
-            blocloop.y = j;
-            if (hero.x <= (blocloop.x + distance) && blocloop.x <= (hero.x + hero.heigthPx) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + hero.heigthPx)) {
-                hero.x = XBefore;
-                hero.y = YBefore;
-	        }
-        }
-    }
+    checkCollision(XBefore, YBefore);
 
-    var AxeX = 0;
-    var AxeY = 0;
-    for (i = 0; i < indestructibleMap.length; i++) {
-		for (j = 0; j<indestructibleMap[0].length; j++){
-            var blocdes = {};
-            blocdes.x = AxeX;
-            blocdes.y = AxeY;
-            if(indestructibleMap[i][j] === 2){
-                if (hero.x <= (blocdes.x + distance) && blocdes.x <= (hero.x + hero.heigthPx) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + hero.heigthPx)) {
-                    hero.x = XBefore;
-                    hero.y = YBefore;
-                }
-	        }
-            if(indestructibleMap[i][j] === 3 || indestructibleMap[i][j] === 4){
-                if (hero.x <= (blocdes.x + distance) && blocdes.x <= (hero.x + hero.heigthPx) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + hero.heigthPx)) {
-                    hero.x = XBefore;
-                    hero.y = YBefore;
-                }
-	        }
-
-            if((indestructibleMap[i][j] === 9) && (hero.bloque)){
-                if (hero.x <= (blocdes.x + 32) && blocdes.x <= (hero.x + 23) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + 23)) {
-                    hero.x = XBefore;
-                    hero.y = YBefore;
-                }
-	        }
-            AxeX += 32;
-        }
-        AxeY += 32;
-        AxeX=0;
-    }
 };
 
 // Draw everything
@@ -431,11 +355,23 @@ var render = function () {
 
     //Draw hero
 	if (heroReady) {
-
 		ctx.drawImage(heroImage, hero.x, hero.y);
 	}
 
 };
+
+/*var compteur = (function() {
+    var i =0; // propriété privée
+
+    return{ // méthodes publiques
+        obtenir:function() {
+            return hero.deposedBomb;
+        }
+        ,incrementer:function() {
+            hero.deposedBomb++;
+        }
+    };
+})();*/
 
 function deserialiseJSON(file){
     var json = null;
@@ -459,6 +395,68 @@ function deserialiseJSON(file){
                     current_frame = 0;
                 }
     }, 500);*/
+
+function checkCollision(XBefore, YBefore){
+    //mur droite
+    if(hero.x+24 >= 513 )//545-32
+        hero.x = 489 ; //545-(32+24) on fige le mouvement du joueur
+
+    //mur gauche
+    if(hero.x <= distance )
+        hero.x = distance;
+
+    //plafond
+    if(hero.y <= distance )
+        hero.y = distance;
+
+    //bas de la map
+    if(hero.y >= 358 )
+        hero.y = 358;
+
+    //détection de collision avec les blocs indestructibles et destructibles
+    for (var i = 64; i < mapwidth-64; i=i+64) {
+        for (var j = 64; j< mapheight-64; j=j+64){
+            var blocloop = {};
+            blocloop.x = i;
+            blocloop.y = j;
+            if (hero.x <= (blocloop.x + distance) && blocloop.x <= (hero.x + hero.heigthPx) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + hero.heigthPx)) {
+                hero.x = XBefore;
+                hero.y = YBefore;
+	        }
+        }
+    }
+    let AxeX = 0;
+    let AxeY = 0;
+    for (i = 0; i < indestructibleMap.length; i++) {
+		for (j = 0; j<indestructibleMap[0].length; j++){
+            var blocdes = {};
+            blocdes.x = AxeX;
+            blocdes.y = AxeY;
+            if(indestructibleMap[i][j] === 2){
+                if (hero.x <= (blocdes.x + distance) && blocdes.x <= (hero.x + hero.heigthPx) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + hero.heigthPx)) {
+                    hero.x = XBefore;
+                    hero.y = YBefore;
+                }
+	        }
+            if(indestructibleMap[i][j] === 3 || indestructibleMap[i][j] === 4){
+                if (hero.x <= (blocdes.x + distance) && blocdes.x <= (hero.x + hero.heigthPx) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + hero.heigthPx)) {
+                    hero.x = XBefore;
+                    hero.y = YBefore;
+                }
+	        }
+
+            if((indestructibleMap[i][j] === 9) && (hero.bloque)){
+                if (hero.x <= (blocdes.x + 32) && blocdes.x <= (hero.x + 23) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + 23)) {
+                    hero.x = XBefore;
+                    hero.y = YBefore;
+                }
+	        }
+            AxeX += 32;
+        }
+        AxeY += 32;
+        AxeX=0;
+    }
+}
 
 
 // The main game loop
