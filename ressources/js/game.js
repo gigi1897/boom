@@ -12,7 +12,7 @@ var mapwidth = canvas.width; //545 px
 var b_speedReady = false;
 var b_speedImage = new Image();
 b_speedImage.onload = function () {
-	b_speedReady = true;
+    b_speedReady = true;
 };
 b_speedImage.src = "ressources/images/bonuses/speed.png";
 
@@ -20,7 +20,7 @@ b_speedImage.src = "ressources/images/bonuses/speed.png";
 var b_damagedReady = false;
 var b_damageImage = new Image();
 b_damageImage.onload = function () {
-	b_damagedReady = true;
+    b_damagedReady = true;
 };
 b_damageImage.src = "ressources/images/bonuses/damage.png";
 
@@ -28,7 +28,7 @@ b_damageImage.src = "ressources/images/bonuses/damage.png";
 var b_addbombReady = false;
 var b_addbombImage = new Image();
 b_addbombImage.onload = function () {
-	b_addbombReady = true;
+    b_addbombReady = true;
 };
 b_addbombImage.src = "ressources/images/bonuses/more.png";
 
@@ -36,7 +36,7 @@ b_addbombImage.src = "ressources/images/bonuses/more.png";
 var heroReady = false;
 var heroImage = new Image();
 heroImage.onload = function () {
-	heroReady = true;
+    heroReady = true;
 
 };
 var imageWidth = 240;
@@ -49,11 +49,10 @@ var current_state = 'down';
 var current_frame = 0;
 
 var animations = {
-        down: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
-        left: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: 0}],
-        right: [{x: 6, y: 0}, {x: 7, y: 0}, {x: 8, y: 0}],
-        up: [{x: 9, y: 0}, {x: 10, y: 0}, {x: 11, y: 0}],
-};
+    down: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
+    left: [{x: 3, y: 0}, {x: 4, y: 0}, {x: 5, y: 0}],
+    right: [{x: 6, y: 0}, {x: 7, y: 0}, { x: 8, y: 0}],
+    up: [{x: 9, y: 0}, {x: 10, y: 0}, {x: 11, y: 0}],};
 
 //gazonbom Image
 var grassReady = false;
@@ -86,7 +85,7 @@ blocdestructibleImage.src = "ressources/images/destructible.png";
 var bombReady = false;
 var bombImage = new Image();
 bombImage.onload = function () {
-	bombReady = true;
+    bombReady = true;
 };
 bombImage.src = "ressources/images/labombe.png";
 
@@ -99,6 +98,8 @@ var hero2 = deserialiseJSON(jsonPathHero2);
 
 
 const distance = 32;
+
+var tabXY;
 
 //indice matrice
 //0 => nothing
@@ -113,31 +114,31 @@ const distance = 32;
 //9 => bombe
 
 // index                  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
-const indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1 ],  // 0
-                        [ 1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1 ],  // 1
-                        [ 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1 ],  // 2
-                        [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,1 ],  // 3
-                        [ 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1 ],  // 4
-                        [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 ],  // 5
-                        [ 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1 ],  // 6
-                        [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 ],  // 7
-                        [ 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1 ],  // 8
-                        [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 ],  // 9
-                        [ 1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1 ],  // 10
-                        [ 1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1 ],  // 11
-                        [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1]]; //  12
+const indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 0
+                        [1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1], // 1
+                        [1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1], // 2
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 3
+                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 4
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 5
+                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 6
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 7
+                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 8
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 9
+                        [1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1], // 10
+                        [1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1], // 11
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]; //  12
 
 
 (function placeBonus() {
-    for (var k = 3;  k<= 4; k++) {
+    for (var k = 3; k <= 4; k++) {
         for (var j = 0; j < 6; j++) {
             let aleaX = Math.floor(Math.random() * 11) + 3;
             let aleaY = Math.floor(Math.random() * 7) + 3;
 
-            if(indestructibleMap[aleaY][aleaX] === 1)
-                aleaY+=1;
+            if (indestructibleMap[aleaY][aleaX] === 1)
+                aleaY += 1;
             else
-                indestructibleMap[aleaY][aleaX]=k;
+                indestructibleMap[aleaY][aleaX] = k;
         }
     }
 
@@ -148,11 +149,11 @@ const indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1 ],
 var keysDown = {};
 
 addEventListener("keydown", function (e) {
-	keysDown[e.keyCode] = true;
+    keysDown[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", function (e) {
-	delete keysDown[e.keyCode];
+    delete keysDown[e.keyCode];
 }, false);
 
 
@@ -161,152 +162,206 @@ var reset = function () {
 
 };
 
-
-function explosion(colonne, ligne){
+function explosion(colonne, ligne, heroObj, heroSec) {
     //haut - droite - bas - gauche
     let col = [0, 1, 0, -1];
-    let lig = [-1,0, 1, 0];
+    let lig = [-1, 0, 1, 0];
 
 
-    let numblocX = parseInt((hero.x+hero.middlePos)/distance);
-    let numblocY = parseInt((hero.y+hero.middlePos)/distance);
+
+    tabXY = GetHeroXY(heroObj);
+
+    let numblocX = tabXY[0];
+    let numblocY = tabXY[1];
+
+
+
+    tabXY = GetHeroXY(heroSec);
+
+    let numblocXSec = tabXY[0];
+    let numblocYSec = tabXY[1];
 
 
     //joueur est sur la bombe
-    if(ligne === numblocY && colonne === numblocX){
+    if (ligne === numblocY && colonne === numblocX || ligne === numblocYSec && colonne === numblocXSec) {
         alert('mort !');
-        hero.cptLife--;
+        heroObj.cptLife--;
     }
 
 
-    for(let j=0;j<4;j++){
-        let i=1;
-        do{
+    for (let j = 0; j < 4; j++) {
+        let i = 1;
+        do {
             //c'est un bloc indestructible, on sort de la boucle
-            if ((indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 1) ||
-                (indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 9) ){
+            if ((indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 1) ||
+                (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 9)) {
                 break;
             }
 
             //c'est une bloc destructible sans bonus derrière, on le casse
-            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 2){
-                indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] = 0;
+            else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 2) {
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 0;
                 i++;
             }
             //joueur est dans le rayon de la bombe
-            else if(ligne + (1*i*lig[j]) === numblocY && colonne +(1*i*col[j]) === numblocX){
+            else if (ligne + (1 * i * lig[j]) === numblocY && colonne + (1 * i * col[j]) === numblocX ||
+                    ligne + (1 * i * lig[j]) === numblocYSec && colonne + (1 * i * col[j]) === numblocXSec) {
                 alert('mort');
-                hero.cptLife--;
+                heroObj.cptLife--;
                 i++;
             }
             //c'est du gazon, on étend le rayon de l'explosion
-            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 0 ||
-                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 6 ||
-                    indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 7 ){
+            else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 0 ||
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 6 ||
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 7) {
                 i++;
             }
 
             //si c'est un bonus, on remplace par le bonus affiche
-            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])]===3){
-                indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])]=6;
+            else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 3) {
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 6;
                 i++;
             }
 
             //si c'est un bonus, on remplace par le bonus affiche
-            else if(indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] === 4){
-                indestructibleMap[ligne + (1*i*lig[j])][colonne +(1*i*col[j])] = 7;
+            else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 4) {
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 7;
                 i++;
-            }
-            else{
+            } else {
                 break;
             }
-        }while(i <= hero.rayon);
+        } while (i <= heroObj.rayon);
     }
+};
+
+function getBonus(heroObj) {
+
+    //teste la position du joueur sur la matrice
+    tabXY = GetHeroXY(heroObj);
+
+    let index_colonne = tabXY[0];
+    let index_ligne = tabXY[1];
+
+
+    if (indestructibleMap[index_ligne][index_colonne] === 6 || indestructibleMap[index_ligne][index_colonne] === 7) {
+        let bonuSound = new Audio("/ressources/sound/bonus.mp3");
+        bonuSound.play();
+
+        if (indestructibleMap[index_ligne][index_colonne] === 6) {
+            //incrémente le cpt bonus speed
+            heroObj.bonusSpeed++;
+            console.log("cpt speed: " + heroObj.bonusSpeed);
+            indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
+            heroObj.speed += 25;
+        } else {
+            //incrémente le cpt bonus rayon
+            heroObj.bonusRayon++;
+            console.log("cpt rayon: " + heroObj.bonusRayon);
+            indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
+            heroObj.rayon += 1; //on augmente le rayon d'explosion de la bombe
+        }
+    }
+};
+
+function GetHeroXY (heroObj) {
+    //0 = x / 1 = y
+    let tab = [];
+
+    tab[0] = parseInt((heroObj.x + heroObj.middlePos) / distance);
+    tab[1] = parseInt((heroObj.y + heroObj.middlePos) / distance);
+
+    return tab;
 }
+function droppBomb(heroObj, heroSec) {
+
+    if (!heroObj.droppedBomb) {
+        console.log(heroObj);
+        //incrementation du cpt depose bomb
+        heroObj.deposedBomb++;
+        console.log(hero.deposedBomb);
+        heroObj.droppedBomb = true;
+
+        tabXY = GetHeroXY(heroObj);
+
+        let numblocX = tabXY[0];
+        let numblocY = tabXY[1];
+
+        //place bomb on the matrice
+        indestructibleMap[numblocY][numblocX] = 9;
+
+        //wait 3 second before explosion
+        setTimeout(function () {
+            if (!(indestructibleMap[numblocY][numblocX] === 0)) {
+                explosion(numblocX, numblocY, heroObj, heroSec);
+                indestructibleMap[numblocY][numblocX] = 0;
+                heroObj.droppedBomb = false;
+
+                //sound explosion
+                let bombExplosion = new Audio("/ressources/sound/8bitbomb.mp3");
+                bombExplosion.play();
+            }
+        }, 3000);
+    }
+};
 
 // Update game objects
 var update = function (modifier) {
     let XBefore = hero.x;
     let YBefore = hero.y;
-    
-    if (38 in keysDown){ // Player holding up
+
+    let XBefore2 = hero2.x;
+    let YBefore2 = hero2.y;
+
+    if (38 in keysDown) { // Player holding up
         current_state = 'up';
         hero.y -= hero.speed * modifier;
     }
-	if (37 in keysDown){ // Player holding left
+    if (37 in keysDown) { // Player holding left
         current_state = 'left';
         hero.x -= hero.speed * modifier;
     }
-	if (40 in keysDown){ // Player holding down
+    if (40 in keysDown) { // Player holding down
         current_state = 'down';
         hero.y += hero.speed * modifier;
     }
-	if (39 in keysDown){ // Player holding right
+    if (39 in keysDown) { // Player holding right
         current_state = 'right';
         hero.x += hero.speed * modifier;
     }
-    if (32 in keysDown){
 
-        if(!hero.droppedBomb){
-            //incrementation du cpt depose bomb
-            hero.deposedBomb++;
-            console.log(hero.deposedBomb);
-            hero.droppedBomb = true;
-
-            let numblocX = parseInt((hero.x+hero.middlePos)/distance);
-            let numblocY = parseInt((hero.y+hero.middlePos)/distance);
-
-
-            //placer la bombe dans la matrice
-            indestructibleMap[numblocY][numblocX] = 9;
-
-            setTimeout(function(){
-                if(!(indestructibleMap[numblocY][numblocX] === 0)){
-                    explosion(numblocX, numblocY);
-                    indestructibleMap[numblocY][numblocX] = 0;
-                    hero.droppedBomb = false;
-                    let bombExplosion = new Audio("/ressources/sound/8bitbomb.mp3");
-                    bombExplosion.play();
-                }
-            }, 3000);
-        }
+    //---------------------------------------------------------
+    if (87 in keysDown) { // Player holding up
+        current_state = 'up';
+        hero2.y -= hero2.speed * modifier;
+    }
+    if (65 in keysDown) { // Player holding left
+        current_state = 'left';
+        hero2.x -= hero2.speed * modifier;
+    }
+    if (83 in keysDown) { // Player holding down
+        current_state = 'down';
+        hero2.y += hero2.speed * modifier;
+    }
+    if (68 in keysDown) { // Player holding right
+        current_state = 'right';
+        hero2.x += hero2.speed * modifier;
     }
 
 
+    if (32 in keysDown) {
+        droppBomb(hero, hero2);
+    }
 
-
-    //teste la position du joueur sur la matrice
-    var index_colonne = parseInt((hero.x+hero.middlePos)/distance);
-    var index_ligne = parseInt((hero.y+hero.middlePos)/distance);
-
-
-    //si la case active est un bonus de vitesse, alors on le remplace par du gazon et on augmente la vitesse du joueur
-    if ((indestructibleMap[index_ligne][index_colonne]) === 6){
-        let bonuSound = new Audio("/ressources/sound/bonus.mp3");
-        bonuSound.play();
-
-        //incrémente le cpt bonus speed
-        hero.bonusSpeed++;
-        console.log("cpt speed: " + hero.bonusSpeed);
-        indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
-        hero.speed+=25;
-
+    if (16 in keysDown) {
+        droppBomb(hero2, hero);
     }
 
 
-    //si la case active est un bonus de dégât, alors on le remplace par du gazon et on augmente la puissance du joueur
-    if ((indestructibleMap[index_ligne][index_colonne])===7){
-        let bonuSound = new Audio("/ressources/sound/bonus.mp3");
-        bonuSound.play();
+    getBonus(hero);
+    getBonus(hero2);
 
-        //incrémente le cpt bonus rayon
-        hero.bonusRayon++;
-        console.log("cpt rayon: " + hero.bonusRayon);
-        indestructibleMap[index_ligne][index_colonne]=0; //on la fait depop
-        hero.rayon += 1; //on augmente le rayon d'explosion de la bombe
-    }
-
-    checkCollision(XBefore, YBefore);
+    checkCollision(XBefore, YBefore, hero);
+    checkCollision(XBefore2, YBefore2, hero2);
 
 };
 
@@ -314,15 +369,15 @@ var update = function (modifier) {
 var render = function () {
 
     //Place le décor
-    if(blocdestructibleReady && blocReady && grassReady && b_speedReady){
+    if (blocdestructibleReady && blocReady && grassReady && b_speedReady) {
         let AxeX = 0;
         let AxeY = 0;
 
         for (let i = 0; i < indestructibleMap.length; i++) {
 
-			for (let j = 0; j<indestructibleMap[0].length; j++){
+            for (let j = 0; j < indestructibleMap[0].length; j++) {
 
-                switch(indestructibleMap[i][j]){
+                switch (indestructibleMap[i][j]) {
                     case 0:
                         ctx.drawImage(grassImage, AxeX, AxeY);
                         break;
@@ -340,136 +395,116 @@ var render = function () {
                     case 7:
                         ctx.drawImage(b_damageImage, AxeX, AxeY);
                         break;
-                    //la bombe
+                        //la bombe
                     case 9:
                         ctx.drawImage(bombImage, AxeX, AxeY);
                         break;
 
                 }
                 AxeX += distance;
-			}
+            }
             AxeY += distance;
-            AxeX=0;
-		}
+            AxeX = 0;
+        }
     }
 
-    //Draw hero
-	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
-	}
+    //Draw hero 1
+    if (heroReady)
+        ctx.drawImage(heroImage, hero.x, hero.y);
+
+    //Draw hero 2
+    if (heroReady)
+        ctx.drawImage(heroImage, hero2.x, hero2.y);
 
 };
 
-/*var compteur = (function() {
-    var i =0; // propriété privée
-
-    return{ // méthodes publiques
-        obtenir:function() {
-            return hero.deposedBomb;
-        }
-        ,incrementer:function() {
-            hero.deposedBomb++;
-        }
-    };
-})();*/
-
-function deserialiseJSON(file){
+function deserialiseJSON(file) {
     var json = null;
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': file,
-            'dataType': "json",
-            'success': function (data) {
-                json = data;
-            }
-        });
-        return json;
-}
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': file,
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+};
 
-/*setInterval(function(){
-            console.log('tes');
-            ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
-            current_frame += 1;
-                if (current_frame > 2) {
-                    current_frame = 0;
-                }
-    }, 500);*/
-
-function checkCollision(XBefore, YBefore){
+function checkCollision(XBefore, YBefore, heroObj) {
     //mur droite
-    if(hero.x+24 >= 513 )//545-32
-        hero.x = 489 ; //545-(32+24) on fige le mouvement du joueur
+    if (heroObj.x + 24 >= 513) //545-32
+        heroObj.x = 489; //545-(32+24) on fige le mouvement du joueur
 
     //mur gauche
-    if(hero.x <= distance )
-        hero.x = distance;
+    if (heroObj.x <= distance)
+        heroObj.x = distance;
 
     //plafond
-    if(hero.y <= distance )
-        hero.y = distance;
+    if (heroObj.y <= distance)
+        heroObj.y = distance;
 
     //bas de la map
-    if(hero.y >= 358 )
-        hero.y = 358;
+    if (heroObj.y >= 358)
+        heroObj.y = 358;
 
     //détection de collision avec les blocs indestructibles et destructibles
-    for (var i = 64; i < mapwidth-64; i=i+64) {
-        for (var j = 64; j< mapheight-64; j=j+64){
+    for (var i = 64; i < mapwidth - 64; i = i + 64) {
+        for (var j = 64; j < mapheight - 64; j = j + 64) {
             var blocloop = {};
             blocloop.x = i;
             blocloop.y = j;
-            if (hero.x <= (blocloop.x + distance) && blocloop.x <= (hero.x + hero.heigthPx) && hero.y <= (blocloop.y + 32) && blocloop.y <= (hero.y + hero.heigthPx)) {
-                hero.x = XBefore;
-                hero.y = YBefore;
-	        }
+            if (heroObj.x <= (blocloop.x + distance) && blocloop.x <= (heroObj.x + heroObj.heigthPx) && heroObj.y <= (blocloop.y + 32) && blocloop.y <= (heroObj.y + heroObj.heigthPx)) {
+                heroObj.x = XBefore;
+                heroObj.y = YBefore;
+            }
         }
     }
     let AxeX = 0;
     let AxeY = 0;
     for (i = 0; i < indestructibleMap.length; i++) {
-		for (j = 0; j<indestructibleMap[0].length; j++){
+        for (j = 0; j < indestructibleMap[0].length; j++) {
             var blocdes = {};
             blocdes.x = AxeX;
             blocdes.y = AxeY;
-            if(indestructibleMap[i][j] === 2){
-                if (hero.x <= (blocdes.x + distance) && blocdes.x <= (hero.x + hero.heigthPx) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + hero.heigthPx)) {
-                    hero.x = XBefore;
-                    hero.y = YBefore;
+            if (indestructibleMap[i][j] === 2) {
+                if (heroObj.x <= (blocdes.x + distance) && blocdes.x <= (heroObj.x + heroObj.heigthPx) && heroObj.y <= (blocdes.y + 32) && blocdes.y <= (heroObj.y + heroObj.heigthPx)) {
+                    heroObj.x = XBefore;
+                    heroObj.y = YBefore;
                 }
-	        }
-            if(indestructibleMap[i][j] === 3 || indestructibleMap[i][j] === 4){
-                if (hero.x <= (blocdes.x + distance) && blocdes.x <= (hero.x + hero.heigthPx) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + hero.heigthPx)) {
-                    hero.x = XBefore;
-                    hero.y = YBefore;
+            }
+            if (indestructibleMap[i][j] === 3 || indestructibleMap[i][j] === 4) {
+                if (heroObj.x <= (blocdes.x + distance) && blocdes.x <= (heroObj.x + heroObj.heigthPx) && heroObj.y <= (blocdes.y + 32) && blocdes.y <= (heroObj.y + heroObj.heigthPx)) {
+                    heroObj.x = XBefore;
+                    heroObj.y = YBefore;
                 }
-	        }
+            }
 
-            if((indestructibleMap[i][j] === 9) && (hero.bloque)){
-                if (hero.x <= (blocdes.x + 32) && blocdes.x <= (hero.x + 23) && hero.y <= (blocdes.y + 32) && blocdes.y <= (hero.y + 23)) {
-                    hero.x = XBefore;
-                    hero.y = YBefore;
+            if ((indestructibleMap[i][j] === 9) && (heroObj.bloque)) {
+                if (heroObj.x <= (blocdes.x + 32) && blocdes.x <= (heroObj.x + 23) && heroObj.y <= (blocdes.y + 32) && blocdes.y <= (heroObj.y + 23)) {
+                    heroObj.x = XBefore;
+                    heroObj.y = YBefore;
                 }
-	        }
+            }
             AxeX += 32;
         }
         AxeY += 32;
-        AxeX=0;
+        AxeX = 0;
     }
-}
-
+};
 
 // The main game loop
 var main = function () {
-	var now = Date.now();
-	var delta = now - then;
+    var now = Date.now();
+    var delta = now - then;
 
-	update(delta / 1000);
-	render();
-	then = now;
+    update(delta / 1000);
+    render();
+    then = now;
 
-	// Request to do this again ASAP
-	requestAnimationFrame(main);
+    // Request to do this again ASAP
+    requestAnimationFrame(main);
 };
 
 // Cross-browser support for requestAnimationFrame
