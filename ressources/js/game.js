@@ -2,7 +2,7 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = 545;
-canvas.height = 416;
+canvas.height = 446;
 
 var mapheight = canvas.height; //416px
 var mapwidth = canvas.width; //545 px
@@ -37,16 +37,31 @@ var heroReady = false;
 var heroImage = new Image();
 heroImage.onload = function () {
     heroReady = true;
-
+    var imageWidth = 240;
+    var imageHeight = 36;
+    var frameWidth = 20;
+    var frameHeight = 36;
 };
-var imageWidth = 240;
-var imageHeight = 36;
-var frameWidth = 20;
-var frameHeight = 36;
 heroImage.src = "ressources/images/smallhero.png";
+
+
+var lifeReady = false;
+var lifeImage = new Image();
+lifeImage.onload = function (){
+    lifeReady = true;
+};
+lifeImage.src = "ressources/images/life.png";
+
+var DeadLifeReady = false;
+var DeadLifeImage = new Image();
+DeadLifeImage.onload = function (){
+    DeadLifeReady = true;
+};
+DeadLifeImage.src = "ressources/images/noLife.png";
 
 var current_state = 'down';
 var current_frame = 0;
+var gameover = false;
 
 var animations = {
     down: [{x: 0, y: 0}, {x: 1, y: 0}, {x: 2, y: 0}],
@@ -89,13 +104,18 @@ bombImage.onload = function () {
 };
 bombImage.src = "ressources/images/labombe.png";
 
+var url_string = window.location.href;
+var url = new URL(url_string);
 
 const jsonPath = "ressources/json/hero1Config.json";
 var hero = deserialiseJSON(jsonPath);
+hero.name = url.searchParams.get("player1name");
+document.getElementById("p1").innerHTML = hero.name;
 
 const jsonPathHero2 = "ressources/json/hero2Config.json";
 var hero2 = deserialiseJSON(jsonPathHero2);
-
+hero2.name = url.searchParams.get("player2name");
+document.getElementById("p2").innerHTML = hero2.name;
 
 const distance = 32;
 
@@ -114,19 +134,21 @@ var tabXY;
 //9 => bombe
 
 // index                  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
-const indestructibleMap = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 0
-                        [1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1], // 1
-                        [1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1], // 2
-                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 3
-                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 4
-                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 5
-                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 6
-                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 7
-                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 8
-                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 9
-                        [1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1], // 10
-                        [1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1], // 11
-                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]; //  12
+const indestructibleMap = [
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //0
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 1
+                        [1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1], // 2
+                        [1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1], // 3
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 4
+                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 5
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 6
+                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 7
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 8
+                        [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1], // 9
+                        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1], // 10
+                        [1, 0, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1], // 11
+                        [1, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1], // 12
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];// 13
 
 
 (function placeBonus() {
@@ -184,14 +206,15 @@ function explosion(colonne, ligne, heroObj, heroSec) {
 
     //joueur est sur la bombe
     if (ligne === numblocY && colonne === numblocX || ligne === numblocYSec && colonne === numblocXSec) {
-        alert('mort !');
         heroObj.cptLife--;
+        if(heroObj.cptLife<1)
+            GameOver();
     }
 
 
-    for (let j = 0; j < 4; j++) {
+    loop1: for (let j = 0; j < 4; j++) {
         let i = 1;
-        do {
+        loop2: do {
             //c'est un bloc indestructible, on sort de la boucle
             if ((indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 1) ||
                 (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 9)) {
@@ -206,8 +229,11 @@ function explosion(colonne, ligne, heroObj, heroSec) {
             //joueur est dans le rayon de la bombe
             else if (ligne + (1 * i * lig[j]) === numblocY && colonne + (1 * i * col[j]) === numblocX ||
                     ligne + (1 * i * lig[j]) === numblocYSec && colonne + (1 * i * col[j]) === numblocXSec) {
-                alert('mort');
                 heroObj.cptLife--;
+                if(heroObj.cptLife<1)
+                    GameOver();
+                break loop2;
+                break loop1;
                 i++;
             }
             //c'est du gazon, on étend le rayon de l'explosion
@@ -232,6 +258,17 @@ function explosion(colonne, ligne, heroObj, heroSec) {
             }
         } while (i <= heroObj.rayon);
     }
+};
+
+function GameOver(){
+    gameover = true;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'black';
+	ctx.font = "24px Helvetica";
+	ctx.textAlign = "center";
+	ctx.textBaseline = "Middle";
+    ctx.fillText("GAME FINISHED !", 120, 100);
+
 };
 
 function getBonus(heroObj) {
@@ -293,12 +330,14 @@ function droppBomb(heroObj, heroSec) {
         setTimeout(function () {
             if (!(indestructibleMap[numblocY][numblocX] === 0)) {
                 explosion(numblocX, numblocY, heroObj, heroSec);
-                indestructibleMap[numblocY][numblocX] = 0;
-                heroObj.droppedBomb = false;
+                if(!gameover){
+                    indestructibleMap[numblocY][numblocX] = 0;
+                    heroObj.droppedBomb = false;
 
-                //sound explosion
-                let bombExplosion = new Audio("/ressources/sound/8bitbomb.mp3");
-                bombExplosion.play();
+                    //sound explosion
+                    let bombExplosion = new Audio("/ressources/sound/8bitbomb.mp3");
+                    bombExplosion.play();
+                }
             }
         }, 3000);
     }
@@ -407,6 +446,41 @@ var render = function () {
             AxeX = 0;
         }
     }
+    ctx.clearRect(0,0,545, 32);
+
+
+    //vies du joueur 1
+    ctx.fillStyle = 'black';
+	ctx.font = "26px Helvetica";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "Middle";
+    let cpt = 3;
+    for(let i=hero.cptLife;i>0;i--){
+        ctx.drawImage(lifeImage, cpt, 5);
+        cpt += 27;
+    }
+    for(let i=0;i<3-hero.cptLife;i++){
+        ctx.drawImage(DeadLifeImage,cpt,5);
+        cpt +=27;
+    }
+
+
+
+    //vies du joueur 1
+    ctx.fillStyle = 'black';
+	ctx.font = "26px Helvetica";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "Middle";
+    let cpt2 = 463;
+    for(let i=hero2.cptLife;i>0;i--){
+        ctx.drawImage(lifeImage, cpt2, 5);
+        cpt2 += 27;
+    }
+    for(let i=0;i<3-hero2.cptLife;i++){
+        ctx.drawImage(DeadLifeImage,cpt2,5);
+        cpt2 +=27;
+    }
+
 
     //Draw hero 1
     if (heroReady)
@@ -442,16 +516,16 @@ function checkCollision(XBefore, YBefore, heroObj) {
         heroObj.x = distance;
 
     //plafond
-    if (heroObj.y <= distance)
-        heroObj.y = distance;
+    if (heroObj.y <= distance*2)
+        heroObj.y = distance*2;
 
     //bas de la map
-    if (heroObj.y >= 358)
-        heroObj.y = 358;
+    if (heroObj.y >= 388)
+        heroObj.y = 388;
 
     //détection de collision avec les blocs indestructibles et destructibles
     for (var i = 64; i < mapwidth - 64; i = i + 64) {
-        for (var j = 64; j < mapheight - 64; j = j + 64) {
+        for (var j = 96; j < mapheight - 64; j = j + 64) {
             var blocloop = {};
             blocloop.x = i;
             blocloop.y = j;
@@ -461,7 +535,7 @@ function checkCollision(XBefore, YBefore, heroObj) {
             }
         }
     }
-    let AxeX = 0;
+    let AxeX = 32;
     let AxeY = 0;
     for (i = 0; i < indestructibleMap.length; i++) {
         for (j = 0; j < indestructibleMap[0].length; j++) {
@@ -480,7 +554,6 @@ function checkCollision(XBefore, YBefore, heroObj) {
                     heroObj.y = YBefore;
                 }
             }
-
             if ((indestructibleMap[i][j] === 9) && (heroObj.bloque)) {
                 if (heroObj.x <= (blocdes.x + 32) && blocdes.x <= (heroObj.x + 23) && heroObj.y <= (blocdes.y + 32) && blocdes.y <= (heroObj.y + 23)) {
                     heroObj.x = XBefore;
@@ -494,18 +567,21 @@ function checkCollision(XBefore, YBefore, heroObj) {
     }
 };
 
+
 // The main game loop
 var main = function () {
-    var now = Date.now();
-    var delta = now - then;
+    if (!gameover){
+        var now = Date.now();
+        var delta = now - then;
 
-    update(delta / 1000);
-    render();
-    then = now;
-
-    // Request to do this again ASAP
-    requestAnimationFrame(main);
+        update(delta / 1000);
+        render();
+        then = now;
+        // Request to do this again ASAP
+        requestAnimationFrame(main);
+    }
 };
+
 
 // Cross-browser support for requestAnimationFrame
 var w = window;
