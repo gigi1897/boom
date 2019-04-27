@@ -1,7 +1,7 @@
 {
     "speed": 60,
     "x": 32,
-	"y": 32,
+	"y": 64,
     "middlePos": 16,
     "heigthPx": 23,
     "rayon":3,
@@ -9,5 +9,6 @@
     "droppedBomb": false,
     "deposedBomb": 0,
     "bonusSpeed": 0,
-    "bonusRayon": 0
+    "bonusRayon": 0,
+    "name": null
 }
