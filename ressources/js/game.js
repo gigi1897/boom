@@ -285,12 +285,31 @@ function explosion(colonne, ligne, heroObj, heroSec) {
 
 function GameOver(){
     gameover = true;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'black';
-	ctx.font = "24px Helvetica";
-	ctx.textAlign = "center";
-	ctx.textBaseline = "Middle";
-    ctx.fillText("GAME FINISHED !", 120, 100);
+    document.getElementById("canvas").style.display = "none";
+    document.getElementById("Instructionsright").style.display = "none";
+    document.getElementById("Instructionsleft").style.display = "none";
+
+    let div = document.createElement("div");
+    div.id = "container";
+    document.getElementById("gameDiv").appendChild(div);
+    let h1 = document.createElement("h1");
+    h1.id = "gameOver";
+    div.appendChild(h1);
+    document.getElementById("gameOver").innerHTML = "Game Over !";
+    let h3 = document.createElement("h3");
+    h3.id = "infoGameOver";
+    div.appendChild(h3);
+    document.getElementById("infoGameOver").innerHTML = "Click on the screen to see stats";
+
+
+    document.onclick= function(event) {
+        if (event===undefined) event= window.event;
+        var target= 'target' in event? event.target : event.srcElement;
+        document.getElementById("container").style.display = "none";
+        document.getElementById("PlayerStats").style.display = "block";
+        document.getElementById("sp1").innerHTML = hero.name;
+        document.getElementById("sp2").innerHTML = hero2.name;
+};
 
 };
 
@@ -417,7 +436,6 @@ var update = function (modifier) {
         droppBomb(hero2, hero);
     }
 
-
     getBonus(hero);
     getBonus(hero2);
 
@@ -528,8 +546,6 @@ function timerExplosion(){
     },350);
 }
 
-
-
 function deserialiseJSON(file) {
     var json = null;
     $.ajax({
@@ -604,7 +620,6 @@ function checkCollision(XBefore, YBefore, heroObj) {
         AxeX = 0;
     }
 };
-
 
 // The main game loop
 var main = function () {

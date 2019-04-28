@@ -3,6 +3,7 @@
     font-family: '8bit16';
     src:url('/ressources/font/8bit16.ttf');
 }
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 *{
     margin: 0;
     padding: 0;
@@ -195,6 +196,45 @@ canvas{
   width: 50%;
 }
 
+/*Game Over*/
+#container {
+  padding: 1em;
+  font-family: '8bit16', Fallback, sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  color: #2f99ff;
+  text-shadow: 0px 2px #255fcc;
+    height: 446px;
+}
+#PlayerStats{
+    display: none;
+}
+#gameOver {
+  font-size: 3em;
+  /* Change glitch effect here */
+  /* animation: glitch-2 1s infinite linear; */
+  animation: glitch-1 2s infinite linear;
+    margin-top: 200px;
+}
+
+@keyframes glitch-1 {
+  0%, 12%, 15%, 52%, 55%, 82%, 85%, 100% {opacity: 1; transform: scaleX(1) scaleY(1); }
+  13% {opacity: .8; transform: scaleY(2); color: #0ff;}
+  53% {opacity: .8; transform: scaleX(.7);  color: #f0f;}
+  83% {opacity: 8; transform: rotate(-10deg); color: #ff0;}
+}
+
+@keyframes glitch-2 {
+  13% {color: #0ff;}
+  53% {color: #f0f;}
+  83% {color: #ff0;}
+}
+
+#infoGameOver{
+    margin-top: 30px;
+    animation: glitch-2 2s infinite linear;
+}
+
 /*==========================================================================================================*/
 #Git{
     color: white;
@@ -231,9 +271,6 @@ h2 {
     color:black;
     text-align: center;
     padding: 30px;
-}
-h3 {
-    font-size: 1em;
 }
 
 a {
