@@ -104,6 +104,14 @@ bombImage.onload = function () {
 };
 bombImage.src = "ressources/images/labombe.png";
 
+// Explosion Image
+var explosionReady = false;
+var explosionImage = new Image();
+explosionImage.onload = function () {
+    explosionReady = true;
+};
+explosionImage.src = "ressources/images/explosion.png";
+
 var url_string = window.location.href;
 var url = new URL(url_string);
 
@@ -211,6 +219,7 @@ function explosion(colonne, ligne, heroObj, heroSec) {
             GameOver();
     }
 
+    indestructibleMap[ligne][colonne] = 11;
 
     loop1: for (let j = 0; j < 4; j++) {
         let i = 1;
@@ -223,23 +232,35 @@ function explosion(colonne, ligne, heroObj, heroSec) {
 
             //c'est une bloc destructible sans bonus derrière, on le casse
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 2) {
-                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 0;
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 11;
                 i++;
+                heroObj.explosedBloc++;
             }
             //joueur est dans le rayon de la bombe
-            else if (ligne + (1 * i * lig[j]) === numblocY && colonne + (1 * i * col[j]) === numblocX ||
-                    ligne + (1 * i * lig[j]) === numblocYSec && colonne + (1 * i * col[j]) === numblocXSec) {
+            else if (ligne + (1 * i * lig[j]) === numblocY && colonne + (1 * i * col[j]) === numblocX) {
+
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 11;
+
                 heroObj.cptLife--;
+
                 if(heroObj.cptLife<1)
                     GameOver();
-                break loop2;
-                break loop1;
+                i++;
+            }
+            else if(ligne + (1 * i * lig[j]) === numblocYSec && colonne + (1 * i * col[j]) === numblocXSec){
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 11;
+
+                heroSec.cptLife--;
+
+                if(heroSec.cptLife<1)
+                    GameOver();
                 i++;
             }
             //c'est du gazon, on étend le rayon de l'explosion
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 0 ||
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 6 ||
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 7) {
+                indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 11;
                 i++;
             }
 
@@ -247,12 +268,14 @@ function explosion(colonne, ligne, heroObj, heroSec) {
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 3) {
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 6;
                 i++;
+                heroObj.explosedBloc++;
             }
 
             //si c'est un bonus, on remplace par le bonus affiche
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 4) {
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 7;
                 i++;
+                heroObj.explosedBloc++;
             } else {
                 break;
             }
@@ -331,7 +354,6 @@ function droppBomb(heroObj, heroSec) {
             if (!(indestructibleMap[numblocY][numblocX] === 0)) {
                 explosion(numblocX, numblocY, heroObj, heroSec);
                 if(!gameover){
-                    indestructibleMap[numblocY][numblocX] = 0;
                     heroObj.droppedBomb = false;
 
                     //sound explosion
@@ -438,7 +460,11 @@ var render = function () {
                     case 9:
                         ctx.drawImage(bombImage, AxeX, AxeY);
                         break;
-
+                        //explosion
+                    case 11:
+                        ctx.drawImage(explosionImage, AxeX, AxeY);
+                        timerExplosion();
+                        break;
                 }
                 AxeX += distance;
             }
@@ -481,7 +507,6 @@ var render = function () {
         cpt2 +=27;
     }
 
-
     //Draw hero 1
     if (heroReady)
         ctx.drawImage(heroImage, hero.x, hero.y);
@@ -491,6 +516,19 @@ var render = function () {
         ctx.drawImage(heroImage, hero2.x, hero2.y);
 
 };
+
+function timerExplosion(){
+    setTimeout(function(){
+        for (let i = 0; i < indestructibleMap.length; i++) {
+            for (let j = 0; j < indestructibleMap[0].length; j++) {
+                if(indestructibleMap[i][j] === 11)
+                    indestructibleMap[i][j] = 0;
+            }
+        }
+    },350);
+}
+
+
 
 function deserialiseJSON(file) {
     var json = null;
