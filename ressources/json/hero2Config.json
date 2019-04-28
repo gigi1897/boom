@@ -10,5 +10,6 @@
     "deposedBomb": 0,
     "bonusSpeed": 0,
     "bonusRayon": 0,
-    "name": null
+    "name": null,
+    "explosedBloc": 0
 }
