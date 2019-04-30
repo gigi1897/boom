@@ -166,21 +166,16 @@ function drop(ev) {
 }
 
 function checkValue(imgName){
+    if($('#player1').is(':empty') && !($('#player2').is(':empty'))){
+        alert('first the player 1');
+        return;
+    }
     if((!($('#player1').is(':empty'))) && $('#player2').is(':empty')) {
         document.getElementById("p1Img").value = imgName;
         return;
     }
     if(!($('#player1').is(':empty')) && !($('#player2').is(':empty'))){
         document.getElementById("p2Img").value = imgName;
-        return;
-    }
-    //2ème possibilité
-    if((!($('#player2').is(':empty'))) && $('#player1').is(':empty')) {
-        document.getElementById("p2Img").value = imgName;
-        return;
-    }
-    if(!($('#player2').is(':empty')) && !($('#player1').is(':empty'))){
-        document.getElementById("p1Img").value = imgName;
         return;
     }
 }

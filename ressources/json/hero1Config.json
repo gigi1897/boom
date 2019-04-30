@@ -5,11 +5,12 @@
     "middlePos": 16,
     "heigthPx": 23,
     "rayon":3,
-    "cptLife": 1,
+    "cptLife": 3,
     "droppedBomb": false,
     "deposedBomb": 0,
     "bonusSpeed": 0,
     "bonusRayon": 0,
     "name": null,
-    "explosedBloc": 0
+    "explosedBloc": 0,
+    "sprite": null
 }
