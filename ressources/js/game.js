@@ -1,3 +1,8 @@
+var url_string = window.location.href;
+var url = new URL(url_string);
+
+var sprite1 = url.searchParams.get("image1");
+var sprite2 = url.searchParams.get("image2");
 // Create the canvas
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -42,7 +47,19 @@ heroImage.onload = function () {
     var frameWidth = 20;
     var frameHeight = 36;
 };
-heroImage.src = "ressources/images/smallhero.png";
+heroImage.src = "ressources/images/"+sprite1+".png";
+
+// Hero image
+var hero2Ready = false;
+var hero2Image = new Image();
+hero2Image.onload = function () {
+    hero2Ready = true;
+    var imageWidth = 240;
+    var imageHeight = 36;
+    var frameWidth = 20;
+    var frameHeight = 36;
+};
+hero2Image.src = "ressources/images/"+sprite2+".png";
 
 
 var lifeReady = false;
@@ -111,9 +128,6 @@ explosionImage.onload = function () {
     explosionReady = true;
 };
 explosionImage.src = "ressources/images/explosion.png";
-
-var url_string = window.location.href;
-var url = new URL(url_string);
 
 const jsonPath = "ressources/json/hero1Config.json";
 var hero = deserialiseJSON(jsonPath);
@@ -530,8 +544,8 @@ var render = function () {
         ctx.drawImage(heroImage, hero.x, hero.y);
 
     //Draw hero 2
-    if (heroReady)
-        ctx.drawImage(heroImage, hero2.x, hero2.y);
+    if (hero2Ready)
+        ctx.drawImage(hero2Image, hero2.x, hero2.y);
 
 };
 
