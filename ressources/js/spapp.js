@@ -162,13 +162,31 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
+  checkValue(data);
 }
 
-function checkValue(){
-    if( !($('#player1').is(':empty')) ) {
-        document.getElementById("formulaire").setAttribute("action","_layout.html#game");
+function checkValue(imgName){
+    if((!($('#player1').is(':empty'))) && $('#player2').is(':empty')) {
+        document.getElementById("p1Img").value = imgName;
+        return;
     }
-    if( !($('#player2').is(':empty')) ) {
+    if(!($('#player1').is(':empty')) && !($('#player2').is(':empty'))){
+        document.getElementById("p2Img").value = imgName;
+        return;
+    }
+    //2ème possibilité
+    if((!($('#player2').is(':empty'))) && $('#player1').is(':empty')) {
+        document.getElementById("p2Img").value = imgName;
+        return;
+    }
+    if(!($('#player2').is(':empty')) && !($('#player1').is(':empty'))){
+        document.getElementById("p1Img").value = imgName;
+        return;
+    }
+}
+function sub () {
+    if((!($('#player1').is(':empty'))) && !($('#player2').is(':empty'))) {
         document.getElementById("formulaire").setAttribute("action","_layout.html#game");
     }
 }
+

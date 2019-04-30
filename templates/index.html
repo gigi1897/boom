@@ -1,28 +1,29 @@
     <h2>Select your player !</h2>
     <p id="instructions">Drag and drop your player in the dashed zone, give him a name click "PLAY" !</p>
 
+<form method="get" id="formulaire">
     <div id="playersList">
         <table class="center">
             <!--première ligne avec 4 persos-->
           <tr>
             <td>
                 <div id="sprite1" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite1.png" draggable="true" ondragstart="drag(event)" id="sprite1" >
+                        <img src="ressources/images/smallhero.png" draggable="true" ondragstart="drag(event)" id="smallhero" ondragend="drop(event)">
                 </div>
             </td>
             <td>
                 <div id="sprite2" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite2.png" draggable="true" ondragstart="drag(event)" id="sprite2" >
+                        <img src="ressources/images/hero.png" draggable="true" ondragstart="drag(event)" id="hero" ondragend="drop(event)">
                 </div>
             </td>
             <td>
                 <div id="sprite3" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite3.png" draggable="true" ondragstart="drag(event)" id="sprite3" >
+                        <img src="ressources/images/full sprites/sprite3.png" draggable="true" ondragstart="drag(event)" id="sprite3" ondragend="drop(event)">
                 </div>
             </td>
             <td>
                 <div id="sprite4" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite4.png" draggable="true" ondragstart="drag(event)" id="sprite4" >
+                        <img src="ressources/images/full sprites/sprite4.png" draggable="true" ondragstart="drag(event)" id="sprite4" ondragend="drop(event)">
                 </div>
             </td>
           </tr>
@@ -32,22 +33,22 @@
           <tr>
             <td>
                 <div id="sprite5" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite5.png" draggable="true" ondragstart="drag(event)" id="sprite5" >
+                        <img src="ressources/images/full sprites/sprite5.png" draggable="true" ondragstart="drag(event)" id="sprite5" ondragend="drop(event)">
                 </div>
             </td>
             <td>
                 <div id="sprite6" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite6.png" draggable="true" ondragstart="drag(event)" id="sprite6" >
+                        <img src="ressources/images/full sprites/sprite6.png" draggable="true" ondragstart="drag(event)" id="sprite6" ondragend="drop(event)">
                 </div>
             </td>
             <td>
                 <div id="sprite7" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite7.png" draggable="true" ondragstart="drag(event)" id="sprite7" >
+                        <img src="ressources/images/full sprites/sprite7.png" draggable="true" ondragstart="drag(event)" id="sprite7" ondragend="drop(event)">
                 </div>
             </td>
             <td>
                 <div id="sprite8" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="ressources/images/full sprites/sprite8.png" draggable="true" ondragstart="drag(event)" id="sprite8" >
+                        <img src="ressources/images/full sprites/sprite8.png" draggable="true" ondragstart="drag(event)" id="sprite8" ondragend="drop(event)">
                 </div>
             </td>
           </tr>
@@ -55,8 +56,6 @@
         </table>
     </div>
 
-
-    <form method="get" id="formulaire">
         <div id="PlayerSelecter">
             <div id="player1choice">
                 <p>Player 1</p>
@@ -73,7 +72,9 @@
             </div>
 
         </div>
+        <input name="image1" type="hidden" id="p1Img">
+        <input name="image2" type="hidden" id="p2Img">
         <div id="playButton">
-            <button id="play" onclick="checkValue()" type="submit" class="btn startGame">Start Game</button>
+            <button id="play" onclick="sub()" type="submit" class="btn startGame">Start Game</button>
         </div>
     </form>
