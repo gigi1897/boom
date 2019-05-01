@@ -1,5 +1,6 @@
 var url_string = window.location.href;
 var url = new URL(url_string);
+var gameOverOnce = false;
 const jsonPath = "ressources/json/hero1Config.json";
 var hero = deserialiseJSON(jsonPath);
 hero.name = url.searchParams.get("player1name");
@@ -299,7 +300,9 @@ function explosion(colonne, ligne, heroObj, heroSec) {
 };
 
 function GameOver(){
-    gameover = true;
+    if (!gameOverOnce){
+        gameOverOnce = true;
+        gameover = true;
     document.getElementById("canvas").style.display = "none";
     document.getElementById("Instructionsright").style.display = "none";
     document.getElementById("Instructionsleft").style.display = "none";
@@ -316,16 +319,41 @@ function GameOver(){
     div.appendChild(h3);
     document.getElementById("infoGameOver").innerHTML = "Click on the screen to see stats";
 
-
     document.onclick= function(event) {
-        if (event===undefined) event= window.event;
-        var target= 'target' in event? event.target : event.srcElement;
-        document.getElementById("container").style.display = "none";
-        document.getElementById("PlayerStats").style.display = "block";
-        document.getElementById("sp1").innerHTML = hero.name;
-        document.getElementById("sp2").innerHTML = hero2.name;
+        if($('#PlayerStats').css('display') === 'none'){
+            if (event===undefined) event= window.event;
+            var target= 'target' in event? event.target : event.srcElement;
+            document.getElementById("container").style.display = "none";
+            document.getElementById("PlayerStats").style.display = "block";
+            document.getElementById("sp1").innerHTML = hero.name;
+            document.getElementById("sp2").innerHTML = hero2.name;
+
+            var image = document.createElement("img");
+            image.src = "/ressources/images/"+hero.sprite+".png";
+            document.getElementById("imagePlayer1").appendChild(image);
+
+            var image2 = document.createElement("img");
+            image2.src = "/ressources/images/"+hero2.sprite+".png";
+            document.getElementById("imagePlayer2").appendChild(image2);
+
+            document.getElementById("deposedBomb1").innerHTML = hero.deposedBomb;
+            document.getElementById("deposedBomb2").innerHTML = hero2.deposedBomb;
+
+            document.getElementById("cptLife1").innerHTML = 3 - hero.cptLife;
+            document.getElementById("cptLife2").innerHTML = 3 - hero2.cptLife;
+
+            document.getElementById("bonusSpeed1").innerHTML = hero.bonusSpeed;
+            document.getElementById("bonusSpeed2").innerHTML = hero2.bonusSpeed;
+
+            document.getElementById("bonusRayon1").innerHTML = hero.bonusRayon;
+            document.getElementById("bonusRayon2").innerHTML = hero2.bonusRayon;
+
+            document.getElementById("explosedBloc1").innerHTML = hero.explosedBloc;
+            document.getElementById("explosedBloc2").innerHTML = hero2.explosedBloc;
+        }
 };
 
+        }
 };
 
 function getBonus(heroObj) {

@@ -66,16 +66,6 @@
           history.pushState(null, null, url);
         }
       }
-      /*
-      if ($page.hasAttribute('default')){
-        var url = '#' + currentPageName;
-        if (param && typeof(param)!=='object') //don't display object in url
-          url += ':' + param;
-        if (location.hash!==url){
-          history.pushState(null, null, url);
-        }
-      }
-      */
     }
   }
 
@@ -166,10 +156,14 @@ function drop(ev) {
 }
 
 function checkValue(imgName){
-    if($('#player1').is(':empty') && !($('#player2').is(':empty'))){
-        alert('first the player 1');
-        return;
+    if(!($('#player1').is(':empty'))){
+        $("#player2InputName").removeAttr("disabled");
+        var player2Att = document.getElementById("player2");
+        var att = document.createAttribute("ondragover");
+        att.value = "allowDrop(event)";
+        player2Att.setAttributeNode(att);
     }
+
     if((!($('#player1').is(':empty'))) && $('#player2').is(':empty')) {
         document.getElementById("p1Img").value = imgName;
         return;
