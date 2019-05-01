@@ -1,8 +1,19 @@
 var url_string = window.location.href;
 var url = new URL(url_string);
+const jsonPath = "ressources/json/hero1Config.json";
+var hero = deserialiseJSON(jsonPath);
+hero.name = url.searchParams.get("player1name");
+document.getElementById("p1").innerHTML = hero.name;
 
-var sprite1 = url.searchParams.get("image1");
-var sprite2 = url.searchParams.get("image2");
+const jsonPathHero2 = "ressources/json/hero2Config.json";
+var hero2 = deserialiseJSON(jsonPathHero2);
+hero2.name = url.searchParams.get("player2name");
+document.getElementById("p2").innerHTML = hero2.name;
+
+hero.sprite = url.searchParams.get("image1");
+hero2.sprite = url.searchParams.get("image2");
+
+
 // Create the canvas
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -47,7 +58,7 @@ heroImage.onload = function () {
     var frameWidth = 20;
     var frameHeight = 36;
 };
-heroImage.src = "ressources/images/"+sprite1+".png";
+heroImage.src = "ressources/images/"+hero.sprite+".png";
 
 // Hero image
 var hero2Ready = false;
@@ -59,7 +70,7 @@ hero2Image.onload = function () {
     var frameWidth = 20;
     var frameHeight = 36;
 };
-hero2Image.src = "ressources/images/"+sprite2+".png";
+hero2Image.src = "ressources/images/"+hero2.sprite+".png";
 
 
 var lifeReady = false;
@@ -128,16 +139,6 @@ explosionImage.onload = function () {
     explosionReady = true;
 };
 explosionImage.src = "ressources/images/explosion.png";
-
-const jsonPath = "ressources/json/hero1Config.json";
-var hero = deserialiseJSON(jsonPath);
-hero.name = url.searchParams.get("player1name");
-document.getElementById("p1").innerHTML = hero.name;
-
-const jsonPathHero2 = "ressources/json/hero2Config.json";
-var hero2 = deserialiseJSON(jsonPathHero2);
-hero2.name = url.searchParams.get("player2name");
-document.getElementById("p2").innerHTML = hero2.name;
 
 const distance = 32;
 
