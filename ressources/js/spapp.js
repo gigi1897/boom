@@ -1,3 +1,6 @@
+if (!location.hash) {
+        location.hash = '#index';
+}
 //custom event IE polyfill
 (function () {
   function CustomEvent ( event, params ) {
