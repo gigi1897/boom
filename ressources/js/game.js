@@ -14,7 +14,7 @@ document.getElementById("p2").innerHTML = hero2.name;
 hero.sprite = url.searchParams.get("image1");
 hero2.sprite = url.searchParams.get("image2");
 
-
+var cptAnim = 0;
 // Create the canvas
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -54,12 +54,12 @@ var heroReady = false;
 var heroImage = new Image();
 heroImage.onload = function () {
     heroReady = true;
+};
     var imageWidth = 240;
     var imageHeight = 36;
     var frameWidth = 20;
     var frameHeight = 36;
-};
-heroImage.src = "ressources/images/"+hero.sprite+".png";
+heroImage.src = "ressources/images/sprite_perso.png";
 
 // Hero image
 var hero2Ready = false;
@@ -394,6 +394,7 @@ function GetHeroXY (heroObj) {
 
     return tab;
 }
+
 function droppBomb(heroObj, heroSec) {
 
     if (!heroObj.droppedBomb) {
@@ -489,7 +490,7 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     //Place le décor
     if (blocdestructibleReady && blocReady && grassReady && b_speedReady) {
         let AxeX = 0;
@@ -568,14 +569,24 @@ var render = function () {
         cpt2 +=27;
     }
 
+    cptAnim = cptAnim+1;
+    if(cptAnim === 20){
+        cptAnim=0;
+        ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
+        current_frame += 1;
+        if (current_frame > 2) {
+            current_frame = 0;
+        }
+    }else{
+        ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
+    }
     //Draw hero 1
-    if (heroReady)
-        ctx.drawImage(heroImage, hero.x, hero.y);
+    //if (heroReady)
+    //    ctx.drawImage(heroImage, hero.x, hero.y);
 
     //Draw hero 2
     if (hero2Ready)
         ctx.drawImage(hero2Image, hero2.x, hero2.y);
-
 };
 
 function timerExplosion(){
