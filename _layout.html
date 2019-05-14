@@ -6,18 +6,12 @@
     <title>Simple Canvas Game</title>
     <link href="ressources/css/app.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-   crossorigin=""></script>
 </head>
 
 <body>
     <header>
         <div id="titre">
-            <img id="headerImg" src='ressources/images/logoBoom.png' width="250px" height="146px">
+            <img id="headerImg" src='ressources/images/logoBoom.png'>
         </div>
         <nav>
             <ul class="menuList" id="menu">
@@ -43,15 +37,15 @@
                 <h2 id="p1">Player 1</h2>
 
                 <p>W, A, S, D - Move</p>
-                <img src="ressources/images/keys/wasd.svg" width="55%" height="55%">
+                <img id="wasd" src="ressources/images/keys/wasd.svg">
 
 
                 <p>Shift - Plant the bomb</p>
-                <img src="ressources/images/keys/shift.svg" width="40%" height="1%">
+                <img id="shift" src="ressources/images/keys/shift.svg">
 
 
                 <p>Escape - Pause the game</p>
-                <img src="ressources/images/keys/esc.svg" width="19%" height="19%">
+                <img id="escap" src="ressources/images/keys/esc.svg">
 
             </div>
 
@@ -61,15 +55,15 @@
 
 
                 <p>Arrow Keys - Move</p>
-                <img src="ressources/images/keys/move.svg" width="41%" height="41%">
+                <img id="arrows" src="ressources/images/keys/move.svg">
 
 
                 <p>Spacebar - Plant the bomb</p>
-                <img src="ressources/images/keys/spacebar.svg" width="60%" height="48px">
+                <img id="spacebar" src="ressources/images/keys/spacebar.svg">
 
 
                 <p>Escape - Pause the game</p>
-                <img src="ressources/images/keys/esc.svg" width="14%" height="14%">
+                <img id="escap" src="ressources/images/keys/esc.svg">
 
             </div>
         </div>
@@ -117,7 +111,6 @@
                <td>Block exploded<span class="dataTable" id="explosedBloc2"></span></td>
            </tr>
         </table>
-        <div id="mapid" style="height: 300px;"></div>
     </div>
     </section>
     <footer>

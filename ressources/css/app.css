@@ -33,11 +33,35 @@ header li a {
 }
 #titre{
     text-align: center;
+
+}
+
+#wasd{
+    width:50%;
+    height:50%;
+}
+
+#shift{
+    width:40%;
+    height:1%;
+}
+
+
+#arrows{
+    width:41%;
+    height:41%;
+}
+
+#spacebar{
+    width:60%;
+    height:43pt;
 }
 
 /*section index*/
 #index{
-    background: url('/ressources/images/background/morning.jpg');
+    background: url('/ressources/images/background/morning2.png');
+
+    /*
     -webkit-background-size:cover;
     -moz-background-size:cover;
     -o-background-size:cover;
@@ -45,6 +69,11 @@ header li a {
     background-repeat:no-repeat;
     background-position:center center;
     background-attachment: fixed;
+    */
+    background-size:cover;
+
+
+
 }
 table, th, td {
     border: 0px solid black;
@@ -130,7 +159,9 @@ input{
 
 /*section game*/
 #game{
-    background: url('/ressources/images/background/midday.png');
+
+    background: url('/ressources/images/background/midday2.png');
+    /*
     -webkit-background-size:cover;
     -moz-background-size:cover;
     -o-background-size:cover;
@@ -138,6 +169,9 @@ input{
     background-repeat:no-repeat;
     background-position:center center;
     background-attachment: fixed;
+    */
+    background-size:cover;
+
 }
 #gameCanvas  {
     margin: auto;
@@ -370,3 +404,6 @@ ul.topnav li a.selected {
 ul.topnav li.icon {
   display: none;
 }
+
+
+
