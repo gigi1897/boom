@@ -7,10 +7,12 @@
     "rayon":3,
     "cptLife": 3,
     "droppedBomb": false,
-    "deposedBomb": 0,
-    "bonusSpeed": 0,
-    "bonusRayon": 0,
     "name": null,
-    "explosedBloc": 0,
-    "sprite": null
+    "sprite": null,
+    "stats": {
+        "deposedBomb": 0,
+        "bonusSpeed": 0,
+        "bonusRayon": 0,
+        "explosedBloc": 0
+    }
 }

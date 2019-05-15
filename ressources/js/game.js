@@ -14,6 +14,19 @@ document.getElementById("p2").innerHTML = hero2.name;
 hero.sprite = url.searchParams.get("image1");
 hero2.sprite = url.searchParams.get("image2");
 
+
+hero.getstats = function getstats () {
+    for(let stat in this.stats){
+        document.getElementById(stat+"1").innerHTML = this.stats[stat];
+    }
+};
+
+hero2.getstats = function getstats () {
+    for(let stat in this.stats){
+        document.getElementById(stat+"2").innerHTML = this.stats[stat];
+    }
+};
+
 var cptAnim = 0;
 // Create the canvas
 var canvas = document.getElementById("canvas");
@@ -202,12 +215,6 @@ addEventListener("keyup", function (e) {
     delete keysDown[e.keyCode];
 }, false);
 
-
-// Reset the game
-var reset = function () {
-
-};
-
 function explosion(colonne, ligne, heroObj, heroSec) {
     //haut - droite - bas - gauche
     let col = [0, 1, 0, -1];
@@ -250,7 +257,7 @@ function explosion(colonne, ligne, heroObj, heroSec) {
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 2) {
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 11;
                 i++;
-                heroObj.explosedBloc++;
+                heroObj.stats.explosedBloc++;
             }
             //joueur est dans le rayon de la bombe
             else if (ligne + (1 * i * lig[j]) === numblocY && colonne + (1 * i * col[j]) === numblocX) {
@@ -284,14 +291,14 @@ function explosion(colonne, ligne, heroObj, heroSec) {
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 3) {
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 6;
                 i++;
-                heroObj.explosedBloc++;
+                heroObj.stats.explosedBloc++;
             }
 
             //si c'est un bonus, on remplace par le bonus affiche
             else if (indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] === 4) {
                 indestructibleMap[ligne + (1 * i * lig[j])][colonne + (1 * i * col[j])] = 7;
                 i++;
-                heroObj.explosedBloc++;
+                heroObj.stats.explosedBloc++;
             } else {
                 break;
             }
@@ -336,20 +343,12 @@ function GameOver(){
             image2.src = "/ressources/images/"+hero2.sprite+".png";
             document.getElementById("imagePlayer2").appendChild(image2);
 
-            document.getElementById("deposedBomb1").innerHTML = hero.deposedBomb;
-            document.getElementById("deposedBomb2").innerHTML = hero2.deposedBomb;
-
             document.getElementById("cptLife1").innerHTML = 3 - hero.cptLife;
             document.getElementById("cptLife2").innerHTML = 3 - hero2.cptLife;
 
-            document.getElementById("bonusSpeed1").innerHTML = hero.bonusSpeed;
-            document.getElementById("bonusSpeed2").innerHTML = hero2.bonusSpeed;
 
-            document.getElementById("bonusRayon1").innerHTML = hero.bonusRayon;
-            document.getElementById("bonusRayon2").innerHTML = hero2.bonusRayon;
-
-            document.getElementById("explosedBloc1").innerHTML = hero.explosedBloc;
-            document.getElementById("explosedBloc2").innerHTML = hero2.explosedBloc;
+            hero.getstats();
+            hero2.getstats();
 
             var script = document.createElement("script");  // create a script DOM node
             script.src = "/ressources/js/location.js";  // set its src to the provided URL
@@ -376,13 +375,13 @@ function getBonus(heroObj) {
 
         if (indestructibleMap[index_ligne][index_colonne] === 6) {
             //incrémente le cpt bonus speed
-            heroObj.bonusSpeed++;
+            heroObj.stats.bonusSpeed++;
             console.log("cpt speed: " + heroObj.bonusSpeed);
             indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
             heroObj.speed += 25;
         } else {
             //incrémente le cpt bonus rayon
-            heroObj.bonusRayon++;
+            heroObj.stats.bonusRayon++;
             console.log("cpt rayon: " + heroObj.bonusRayon);
             indestructibleMap[index_ligne][index_colonne] = 0; //on la fait depop
             heroObj.rayon += 1; //on augmente le rayon d'explosion de la bombe
@@ -405,7 +404,7 @@ function droppBomb(heroObj, heroSec) {
     if (!heroObj.droppedBomb) {
         console.log(heroObj);
         //incrementation du cpt depose bomb
-        heroObj.deposedBomb++;
+        heroObj.stats.deposedBomb++;
         console.log(hero.deposedBomb);
         heroObj.droppedBomb = true;
 
@@ -701,5 +700,4 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 // Let's play this game!
 var then = Date.now();
-reset();
 main();
