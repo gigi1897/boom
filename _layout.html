@@ -6,6 +6,12 @@
     <title>Simple Canvas Game</title>
     <link href="ressources/css/app.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
 </head>
 
 <body>
@@ -78,6 +84,10 @@
                <td id="imagePlayer1"></td>
                <td id="imagePlayer2"></td>
            </tr>
+            <tr>
+               <td>Losted life<span class="dataTable" id="cptLife1"></span></td>
+               <td>Losted life<span class="dataTable" id="cptLife2"></span></td>
+           </tr>
            <tr>
                <th>Bomb</th>
                <th>Bomb</th>
@@ -85,10 +95,6 @@
            <tr>
                <td>Bomb deposited<span class="dataTable" id="deposedBomb1"></span></td>
                <td>Bomb deposited<span class="dataTable" id="deposedBomb2"></span></td>
-           </tr>
-            <tr>
-               <td>Losted life<span class="dataTable" id="cptLife1"></span></td>
-               <td>Losted life<span class="dataTable" id="cptLife2"></span></td>
            </tr>
             <tr>
                <th>Bonus</th>
@@ -111,6 +117,7 @@
                <td>Block exploded<span class="dataTable" id="explosedBloc2"></span></td>
            </tr>
         </table>
+        <div id="mapid" style="height: 300px;"></div>
     </div>
     </section>
     <footer>
