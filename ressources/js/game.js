@@ -14,7 +14,6 @@ document.getElementById("p2").innerHTML = hero2.name;
 hero.sprite = url.searchParams.get("image1");
 hero2.sprite = url.searchParams.get("image2");
 
-
 hero.getstats = function getstats () {
     for(let stat in this.stats){
         document.getElementById(stat+"1").innerHTML = this.stats[stat];
@@ -26,6 +25,24 @@ hero2.getstats = function getstats () {
         document.getElementById(stat+"2").innerHTML = this.stats[stat];
     }
 };
+
+//local storage
+userJSON = localStorage.getItem(hero.name);
+if(userJSON != null){
+    heroTmp = JSON.parse(userJSON);
+    hero.stats = heroTmp.stats;
+}else{
+    localStorage.setItem(hero.name, JSON.stringify(hero));
+}
+
+userJSON2 = localStorage.getItem(hero2.name);
+if(userJSON != null){
+    heroTmp2 = JSON.parse(userJSON2);
+    hero2.stats = heroTmp2.stats;
+}else{
+    localStorage.setItem(hero2.name, JSON.stringify(hero2));
+}
+
 
 var cptAnim = 0;
 // Create the canvas
@@ -68,10 +85,10 @@ var heroImage = new Image();
 heroImage.onload = function () {
     heroReady = true;
 };
-    var imageWidth = 240;
-    var imageHeight = 36;
-    var frameWidth = 20;
-    var frameHeight = 36;
+var imageWidth = 240;
+var imageHeight = 36;
+var frameWidth = 20;
+var frameHeight = 36;
 heroImage.src = "ressources/images/sprite_perso.png";
 
 // Hero image
@@ -79,10 +96,6 @@ var hero2Ready = false;
 var hero2Image = new Image();
 hero2Image.onload = function () {
     hero2Ready = true;
-    var imageWidth = 240;
-    var imageHeight = 36;
-    var frameWidth = 20;
-    var frameHeight = 36;
 };
 hero2Image.src = "ressources/images/"+hero2.sprite+".png";
 
@@ -326,6 +339,9 @@ function GameOver(){
     div.appendChild(h3);
     document.getElementById("infoGameOver").innerHTML = "Click on the screen to see stats";
 
+
+
+
     document.onclick= function(event) {
         if($('#PlayerStats').css('display') === 'none'){
             if (event===undefined) event= window.event;
@@ -346,6 +362,8 @@ function GameOver(){
             document.getElementById("cptLife1").innerHTML = 3 - hero.cptLife;
             document.getElementById("cptLife2").innerHTML = 3 - hero2.cptLife;
 
+            localStorage.setItem(hero.name, JSON.stringify(hero));
+            localStorage.setItem(hero2.name, JSON.stringify(hero2));
 
             hero.getstats();
             hero2.getstats();
@@ -528,6 +546,7 @@ var render = function () {
                         break;
                         //explosion
                     case 11:
+                        ctx.drawImage(grassImage, AxeX, AxeY);
                         ctx.drawImage(explosionImage, AxeX, AxeY);
                         timerExplosion();
                         break;
