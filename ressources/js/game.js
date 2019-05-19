@@ -30,7 +30,9 @@ hero2.getstats = function getstats () {
 userJSON = localStorage.getItem(hero.name);
 if(userJSON != null){
     heroTmp = JSON.parse(userJSON);
-    hero.stats = heroTmp.stats;
+
+    if(heroTmp.stats != null)
+        hero.stats = heroTmp.stats;
 }else{
     localStorage.setItem(hero.name, JSON.stringify(hero));
 }
@@ -38,7 +40,10 @@ if(userJSON != null){
 userJSON2 = localStorage.getItem(hero2.name);
 if(userJSON != null){
     heroTmp2 = JSON.parse(userJSON2);
-    hero2.stats = heroTmp2.stats;
+
+    if(heroTmp2.stats != null)
+        hero2.stats = heroTmp2.stats;
+
 }else{
     localStorage.setItem(hero2.name, JSON.stringify(hero2));
 }
@@ -455,6 +460,7 @@ function droppBomb(heroObj, heroSec) {
 
 // Update game objects
 var update = function (modifier) {
+
     let XBefore = hero.x;
     let YBefore = hero.y;
 
@@ -463,46 +469,49 @@ var update = function (modifier) {
 
     if (38 in keysDown) { // Player holding up
         current_state = 'up';
-        hero.y -= hero.speed * modifier;
+        hero2.y -= hero2.speed * modifier;
     }
     if (37 in keysDown) { // Player holding left
         current_state = 'left';
-        hero.x -= hero.speed * modifier;
+        hero2.x -= hero2.speed * modifier;
     }
     if (40 in keysDown) { // Player holding down
         current_state = 'down';
-        hero.y += hero.speed * modifier;
-    }
-    if (39 in keysDown) { // Player holding right
-        current_state = 'right';
-        hero.x += hero.speed * modifier;
-    }
-
-    //---------------------------------------------------------
-    if (87 in keysDown) { // Player holding up
-        current_state = 'up';
-        hero2.y -= hero2.speed * modifier;
-    }
-    if (65 in keysDown) { // Player holding left
-        current_state = 'left';
-        hero2.x -= hero2.speed * modifier;
-    }
-    if (83 in keysDown) { // Player holding down
-        current_state = 'down';
         hero2.y += hero2.speed * modifier;
     }
-    if (68 in keysDown) { // Player holding right
+    if (39 in keysDown) { // Player holding right
         current_state = 'right';
         hero2.x += hero2.speed * modifier;
     }
 
 
+
+
+    //---------------------------------------------------------
+    if (87 in keysDown) { // Player holding up
+        current_state = 'up';
+        hero.y -= hero.speed * modifier;
+    }
+    if (65 in keysDown) { // Player holding left
+        current_state = 'left';
+        hero.x -= hero.speed * modifier;
+    }
+    if (83 in keysDown) { // Player holding down
+        current_state = 'down';
+        hero.y += hero.speed * modifier;
+    }
+    if (68 in keysDown) { // Player holding right
+        current_state = 'right';
+        hero.x += hero.speed * modifier;
+    }
+
+
     if (32 in keysDown) {
-        droppBomb(hero, hero2);
+        droppBomb(hero2, hero);
     }
 
     if (16 in keysDown) {
-        droppBomb(hero2, hero);
+        droppBomb(hero, hero2);
     }
 
     getBonus(hero);
