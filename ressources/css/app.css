@@ -212,10 +212,10 @@ canvas{
 }
 
 /*section home*/
-#home, #help, #story{
+#help, #story{
     margin: 20px;
 }
-#home,#help,#story>div>*{
+#help,#story>div>*{
     padding-bottom: 15px;
     font-family: "Arial";
 }
@@ -245,6 +245,17 @@ canvas{
 #PlayerStats{
     display: none;
 }
+
+
+#imagePlayer1,#imagePlayer2{
+
+    padding-top: 2%;
+    padding-bottom: 2%;
+    color:rgb(246, 202, 92);
+}
+
+
+
 #gameOver {
   font-size: 3em;
   /* Change glitch effect here */
@@ -254,8 +265,43 @@ canvas{
 }
 /*statistiques*/
 .dataTable{
-    padding-left: 120px;
+
+    float:right;
+    padding-right: 5%;
 }
+
+
+#PlayerStats > h2 {
+
+    color:rgb(246, 202, 92);
+}
+
+#results td{
+
+    height: 40px;
+}
+
+#results{
+
+font-family: 'Arial', Fallback, sans-serif;
+width:500px;
+
+}
+
+.statstable{
+
+    text-align: left;
+    padding-left: 1%;
+}
+
+#PositionLink{
+     text-align: center;
+    display: block;
+    margin: auto;
+    margin-bottom: 30px;
+    color: rgb(246, 202, 92);
+}
+
 
 /*----------------------------------------------------------*/
 @keyframes glitch-1 {
@@ -325,7 +371,6 @@ body > section {
   display:none;
 }
 
-body.home > section#home,
 body.help > section#help,
 body.index > section#index,
 body.story > section#story,
@@ -333,8 +378,16 @@ body.game > section#game{
     display:block;
 }
 
+#mapid{
+    height:300px;
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+
+}
+
 /* nav highlightion rules */
-body.home #menu a[href="#home"],
 body.help #menu a[href="#help"],
 body.index #menu a[href="#index"],
 body.story #menu a[href="#story"]{
@@ -405,5 +458,60 @@ ul.topnav li.icon {
   display: none;
 }
 
+
+/*==================================================================================*/
+.modal-window {
+  position: fixed;
+  background-color: rgba(200, 200, 200, 0.75);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.modal-window:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-window>div {
+  width: 700px;
+  position: relative;
+  margin: 10% auto;
+  padding: 2rem;
+  background: #fff;
+  color: #444;
+}
+
+.modal-window header {
+  font-weight: bold;
+}
+
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 15px;
+}
 
 

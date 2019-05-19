@@ -4,7 +4,7 @@
 	"y": 380,
     "middlePos": 16,
     "heigthPx": 23,
-    "rayon":3,
+    "rayon":1,
     "cptLife": 3,
     "droppedBomb": false,
     "name": null,

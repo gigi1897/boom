@@ -21,14 +21,12 @@
         </div>
         <nav>
             <ul class="menuList" id="menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#help">Help</a></li>
                 <li><a href="#index">Game</a></li>
                 <li><a href="#story">Story</a></li>
+                <li><a href="#help">Help</a></li>
             </ul>
         </nav>
     </header>
-    <section id="home" src="templates/home.html"></section>
     <section id="help" src="templates/help.html"></section>
     <section id="index" src="templates/index.html"></section>
     <section id="story" src="templates/story.html"></section>
@@ -75,7 +73,15 @@
         </div>
     <div id="PlayerStats">
         <h2>Stats of the game</h2>
-        <table>
+        <a id="PositionLink" href="#open-modal">Your position</a>
+        <div id="open-modal" class="modal-window">
+          <div>
+            <a href="#modal-close" title="Close" class="modal-close">close &times;</a>
+            <h1>You played the game here !</h1>
+            <div id="mapid"></div>
+          </div>
+        </div>
+        <table id="results">
             <tr>
                 <th id="sp1"></th>
                 <th id="sp2"></th>
@@ -85,39 +91,38 @@
                <td id="imagePlayer2"></td>
            </tr>
             <tr>
-               <td>Losted life<span class="dataTable" id="cptLife1"></span></td>
-               <td>Losted life<span class="dataTable" id="cptLife2"></span></td>
+               <td class="statstable">Losted lifes<span class="dataTable" id="cptLife1"></span></td>
+               <td class="statstable">Losted lifes<span class="dataTable" id="cptLife2"></span></td>
            </tr>
            <tr>
                <th>Bomb</th>
                <th>Bomb</th>
            </tr>
            <tr>
-               <td>Bomb deposited<span class="dataTable" id="deposedBomb1"></span></td>
-               <td>Bomb deposited<span class="dataTable" id="deposedBomb2"></span></td>
+               <td class="statstable">Bombs planted<span class="dataTable" id="deposedBomb1"></span></td>
+               <td class="statstable">Bombs planted<span class="dataTable" id="deposedBomb2"></span></td>
            </tr>
             <tr>
-               <th>Bonus</th>
-               <th>Bonus</th>
+               <th>Bonuses</th>
+               <th>Bonuses</th>
            </tr>
             <tr>
-               <td>Speed bonus<span class="dataTable" id="bonusSpeed1"></span></td>
-               <td>Speed bonus<span class="dataTable" id="bonusSpeed2"></span></td>
+               <td class="statstable">Speed bonus<span class="dataTable" id="bonusSpeed1"></span></td>
+               <td class="statstable">Speed bonus<span class="dataTable" id="bonusSpeed2"></span></td>
            </tr>
             <tr>
-               <td>Ray bonus<span class="dataTable" id="bonusRayon1"></span></td>
-               <td>Ray bonus<span class="dataTable" id="bonusRayon2"></span></td>
+               <td class="statstable">Range bonus<span class="dataTable" id="bonusRayon1"></span></td>
+               <td class="statstable">Range bonus<span class="dataTable" id="bonusRayon2"></span></td>
            </tr>
             <tr>
-               <th>Bloc</th>
-               <th>Bloc</th>
+               <th>Blocks</th>
+               <th>Blocks</th>
            </tr>
             <tr>
-               <td>Block exploded<span class="dataTable" id="explosedBloc1"></span></td>
-               <td>Block exploded<span class="dataTable" id="explosedBloc2"></span></td>
+               <td class="statstable">Block exploded<span class="dataTable" id="explosedBloc1"></span></td>
+               <td class="statstable">Block exploded<span class="dataTable" id="explosedBloc2"></span></td>
            </tr>
         </table>
-        <div id="mapid" style="height: 300px;"></div>
     </div>
     </section>
     <footer>
