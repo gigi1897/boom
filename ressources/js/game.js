@@ -31,7 +31,7 @@ userJSON = localStorage.getItem(hero.name);
 if(userJSON != null){
     heroTmp = JSON.parse(userJSON);
 
-    if(heroTmp.stats != null)
+    if(heroTmp != null)
         hero.stats = heroTmp.stats;
 }else{
     localStorage.setItem(hero.name, JSON.stringify(hero));
@@ -41,7 +41,7 @@ userJSON2 = localStorage.getItem(hero2.name);
 if(userJSON != null){
     heroTmp2 = JSON.parse(userJSON2);
 
-    if(heroTmp2.stats != null)
+    if(heroTmp2 != null)
         hero2.stats = heroTmp2.stats;
 
 }else{
@@ -96,7 +96,7 @@ var imageHeight = 36;
 var frameWidth = 24;
 var frameHeight = 24;
 
-heroImage.src = "ressources/images/autre.png";
+heroImage.src = "ressources/images/"+hero.sprite+".png";
 
 
 
@@ -123,8 +123,8 @@ DeadLifeImage.onload = function (){
 };
 DeadLifeImage.src = "ressources/images/noLife.png";
 
-var current_state = 'down';
-var current_frame = 0;
+//var current_state = 'down';
+//var current_frame = 0;
 var gameover = false;
 
 var animations = {
@@ -472,19 +472,19 @@ var update = function (modifier) {
     let YBefore2 = hero2.y;
 
     if (38 in keysDown) { // Player holding up
-        current_state = 'up';
+        hero2.current_state = 'up';
         hero2.y -= hero2.speed * modifier;
     }
     if (37 in keysDown) { // Player holding left
-        current_state = 'left';
+        hero2.current_state = 'left';
         hero2.x -= hero2.speed * modifier;
     }
     if (40 in keysDown) { // Player holding down
-        current_state = 'down';
+        hero2.current_state = 'down';
         hero2.y += hero2.speed * modifier;
     }
     if (39 in keysDown) { // Player holding right
-        current_state = 'right';
+        hero2.current_state = 'right';
         hero2.x += hero2.speed * modifier;
     }
 
@@ -493,19 +493,19 @@ var update = function (modifier) {
 
     //---------------------------------------------------------
     if (87 in keysDown) { // Player holding up
-        current_state = 'up';
+        hero.current_state = 'up';
         hero.y -= hero.speed * modifier;
     }
     if (65 in keysDown) { // Player holding left
-        current_state = 'left';
+        hero.current_state = 'left';
         hero.x -= hero.speed * modifier;
     }
     if (83 in keysDown) { // Player holding down
-        current_state = 'down';
+        hero.current_state = 'down';
         hero.y += hero.speed * modifier;
     }
     if (68 in keysDown) { // Player holding right
-        current_state = 'right';
+        hero.current_state = 'right';
         hero.x += hero.speed * modifier;
     }
 
@@ -608,24 +608,29 @@ var render = function () {
         cpt2 +=27;
     }
 
-    cptAnim = cptAnim+1;
+    cptAnim++;
     if(cptAnim === 20){
-        cptAnim=0;
-        ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
-        current_frame += 1;
-        if (current_frame > 2) {
-            current_frame = 0;
+        ctx.drawImage(heroImage, animations[hero.current_state][hero.current_frame].x * frameWidth, animations[hero.current_state][hero.current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
+        hero.current_frame += 1;
+        if (hero.current_frame > 2) {
+            hero.current_frame = 0;
         }
     }else{
-        ctx.drawImage(heroImage, animations[current_state][current_frame].x * frameWidth, animations[current_state][current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
+        ctx.drawImage(heroImage, animations[hero.current_state][hero.current_frame].x * frameWidth, animations[hero.current_state][hero.current_frame].y * frameHeight, frameWidth, frameHeight, hero.x, hero.y, frameWidth, frameHeight);
     }
-    //Draw hero 1
-    //if (heroReady)
-    //    ctx.drawImage(heroImage, hero.x, hero.y);
+
 
     //Draw hero 2
-    if (hero2Ready)
-        ctx.drawImage(hero2Image, hero2.x, hero2.y);
+    if(cptAnim === 20){
+        cptAnim=0;
+        ctx.drawImage(hero2Image, animations[hero2.current_state][hero2.current_frame].x * frameWidth, animations[hero2.current_state][hero2.current_frame].y * frameHeight, frameWidth, frameHeight, hero2.x, hero2.y, frameWidth, frameHeight);
+        hero2.current_frame += 1;
+        if (hero2.current_frame > 2) {
+            hero2.current_frame = 0;
+        }
+    }else{
+        ctx.drawImage(hero2Image, animations[hero2.current_state][hero2.current_frame].x * frameWidth, animations[hero2.current_state][hero2.current_frame].y * frameHeight, frameWidth, frameHeight, hero2.x, hero2.y, frameWidth, frameHeight);
+    }
 };
 
 function timerExplosion(){

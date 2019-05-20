@@ -9,6 +9,8 @@
     "droppedBomb": false,
     "name": null,
     "sprite": null,
+    "current_state": "down",
+    "current_frame": 0,
     "stats": {
         "deposedBomb": 0,
         "bonusSpeed": 0,
