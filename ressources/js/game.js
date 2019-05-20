@@ -358,16 +358,17 @@ function GameOver(){
             document.getElementById("container").style.display = "none";
             document.getElementById("PlayerStats").style.display = "block";
             document.body.style.backgroundImage = "url('/ressources/images/background/night.png')";
+
             document.getElementById("sp1").innerHTML = hero.name;
             document.getElementById("sp2").innerHTML = hero2.name;
 
             var image = document.createElement("img");
-            image.src = "/ressources/images/"+hero.sprite+".png";
+            image.src = "/ressources/images/sprites/"+hero.sprite+".png";
             document.getElementById("imagePlayer1").appendChild(image);
             image.height = "40";
 
             var image2 = document.createElement("img");
-            image2.src = "/ressources/images/"+hero2.sprite+".png";
+            image2.src = "/ressources/images/sprites/"+hero2.sprite+".png";
             document.getElementById("imagePlayer2").appendChild(image2);
             image2.height = "40";
 
