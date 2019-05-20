@@ -357,18 +357,7 @@ function GameOver(){
             var target= 'target' in event? event.target : event.srcElement;
             document.getElementById("container").style.display = "none";
             document.getElementById("PlayerStats").style.display = "block";
-
-
-            //problème ici
-           /* document.getElementById("game").body.background = "url('/ressources/images/background/night.png')";*/
-
-            document.getElementById("game").style.backgroundImage = "url('/ressources/images/background/night.png')";
-
-
-
-
-
-
+            document.body.style.backgroundImage = "url('/ressources/images/background/night.png')";
             document.getElementById("sp1").innerHTML = hero.name;
             document.getElementById("sp2").innerHTML = hero2.name;
 
