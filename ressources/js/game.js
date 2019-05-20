@@ -349,16 +349,10 @@ function GameOver(){
     document.getElementById("infoGameOver").innerHTML = "Click on the screen to see stats";
 
 
-
-
     document.onclick= function(event) {
         if($('#PlayerStats').css('display') === 'none'){
-            if (event===undefined) event= window.event;
-            var target= 'target' in event? event.target : event.srcElement;
-            document.getElementById("container").style.display = "none";
+            window.location.href = "#stats";
             document.getElementById("PlayerStats").style.display = "block";
-            document.body.style.backgroundImage = "url('/ressources/images/background/night.png')";
-
             document.getElementById("sp1").innerHTML = hero.name;
             document.getElementById("sp2").innerHTML = hero2.name;
 
