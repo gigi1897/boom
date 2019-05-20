@@ -72,49 +72,6 @@ input[type="text"]
     margin-top: 20px;
 }
 
-body #index {
-    /*
-    position: relative;
-    background: url('/ressources/images/background/morning2.png');
-    background-size:cover;
-    */
-}
-
-#index{
-
-
-
-    /*
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position:center center;
-    background-attachment: fixed;
-    */
-    /*background-size:cover;*/
-
-
-}
-
-
-#story{
-
-
-}
-
-
-#storypic{
-    /*
-    float: right;
-    height: 50%;
-    width: 50%;
-    padding-left: 10px;
-    */
-
-}
-
 table, th, td {
     border: 0px solid black;
     margin-left:auto;
@@ -212,23 +169,6 @@ input{
 
 
 /*section game*/
-
-#game{
-/*
-    background: url('/ressources/images/background/midday2.png');
-    /*
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position:center center;
-    background-attachment: fixed;
-
-    background-size:cover;
-    */
-
-}
 #gameCanvas  {
     margin: auto;
     text-align: center;
@@ -301,6 +241,7 @@ canvas{
     height: 446px;
 }
 #PlayerStats{
+    margin: 30px;
     display: none;
 
 }
@@ -423,20 +364,6 @@ body {
   position:relative;
 
   font-family: '8bit16', Fallback, sans-serif;
-
-
-
-
-}
-
-body::after{
-
-/*
-    content:'';
-    display:block;
-
-    */
-    /*height:100px;*/
 }
 
 h1 {
@@ -463,7 +390,8 @@ body > section {
 body.help > section#help,
 body.index > section#index,
 body.story > section#story,
-body.game > section#game{
+body.game > section#game,
+body.stats > section#stats{
     display:block;
 }
 
@@ -473,6 +401,10 @@ body.game{
 }
 body.index{
     background: url('/ressources/images/background/morning2.png');
+    background-size:cover;
+}
+body.stats{
+    background: url('/ressources/images/background/night.png');
     background-size:cover;
 }
 
