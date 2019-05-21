@@ -1,7 +1,7 @@
 /*header*/
 @font-face {
     font-family: '8bit16';
-    src:url('ressources/font/8bit16.ttf');
+    src:url('../font/8bit16.ttf');
 }
 @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 *{
@@ -91,7 +91,7 @@ td{
     width: 70px;
     height: 70px;
     text-align: center;
-    background-image:url('ressources/images/background/whitetrans.png');
+    background-image:url('../images/background/whitetrans.png');
 }
 
 #player1, #player2{
@@ -396,15 +396,15 @@ body.stats > section#stats{
 }
 
 body.game{
-    background: url('/ressources/images/background/midday2.png');
+    background: url('../images/background/midday2.png');
     background-size:cover;
 }
 body.index{
-    background: url('ressources/images/background/morning2.png');
+    background: url('../images/background/morning2.png');
     background-size:cover;
 }
 body.stats{
-    background: url('/ressources/images/background/night.png');
+    background: url('../images/background/night.png');
     background-size:cover;
 }
 
@@ -543,5 +543,3 @@ ul.topnav li.icon {
   font-size: 150%;
   margin: 0 0 15px;
 }
-
-

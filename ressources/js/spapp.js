@@ -178,7 +178,7 @@ function checkValue(imgName){
 }
 function sub () {
     if((!($('#player1').is(':empty'))) && !($('#player2').is(':empty'))) {
-        document.getElementById("formulaire").setAttribute("action","_layout.html#game");
+        document.getElementById("formulaire").setAttribute("action","index.html#game");
     }
 }
 
