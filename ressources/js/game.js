@@ -395,7 +395,7 @@ function getBonus(heroObj) {
 
 
     if (indestructibleMap[index_ligne][index_colonne] === 6 || indestructibleMap[index_ligne][index_colonne] === 7) {
-        let bonuSound = new Audio("../sound/bonus.mp3");
+        let bonuSound = new Audio("bonus.mp3");
         bonuSound.play();
 
         if (indestructibleMap[index_ligne][index_colonne] === 6) {
