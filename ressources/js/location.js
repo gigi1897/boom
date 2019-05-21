@@ -9,7 +9,7 @@ function showPosition(position) {
     var mymap = L.map('mapid').setView([lat, lon], 13);
 
     var greenIcon = L.icon({
-    iconUrl: '/ressources/images/bombMapIco.png',
+    iconUrl: 'ressources/images/bombMapIco.png',
     iconSize: [35, 35]
 });
 
