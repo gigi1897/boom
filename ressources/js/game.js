@@ -357,12 +357,12 @@ function GameOver(){
             document.getElementById("sp2").innerHTML = hero2.name;
 
             var image = document.createElement("img");
-            image.src = "/ressources/images/sprites/"+hero.sprite+".png";
+            image.src = "ressources/images/sprites/"+hero.sprite+".png";
             document.getElementById("imagePlayer1").appendChild(image);
             image.height = "40";
 
             var image2 = document.createElement("img");
-            image2.src = "/ressources/images/sprites/"+hero2.sprite+".png";
+            image2.src = "ressources/images/sprites/"+hero2.sprite+".png";
             document.getElementById("imagePlayer2").appendChild(image2);
             image2.height = "40";
 
@@ -376,7 +376,7 @@ function GameOver(){
             hero2.getstats();
 
             var script = document.createElement("script");  // create a script DOM node
-            script.src = "/ressources/js/location.js";  // set its src to the provided URL
+            script.src = "ressources/js/location.js";  // set its src to the provided URL
 
             document.head.appendChild(script);
         }
