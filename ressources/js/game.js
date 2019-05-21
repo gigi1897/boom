@@ -395,7 +395,7 @@ function getBonus(heroObj) {
 
 
     if (indestructibleMap[index_ligne][index_colonne] === 6 || indestructibleMap[index_ligne][index_colonne] === 7) {
-        let bonuSound = new Audio("bonus.mp3");
+        let bonuSound = new Audio("ressources/sound/bonus.mp3");
         bonuSound.play();
 
         if (indestructibleMap[index_ligne][index_colonne] === 6) {
@@ -449,7 +449,7 @@ function droppBomb(heroObj, heroSec) {
                     heroObj.droppedBomb = false;
 
                     //sound explosion
-                    let bombExplosion = new Audio("8bitbomb.mp3");
+                    let bombExplosion = new Audio("ressources/sound/8bitbomb.mp3");
                     bombExplosion.play();
                 }
             }
