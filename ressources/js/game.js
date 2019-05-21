@@ -449,7 +449,7 @@ function droppBomb(heroObj, heroSec) {
                     heroObj.droppedBomb = false;
 
                     //sound explosion
-                    let bombExplosion = new Audio("../ressources/sound/8bitbomb.mp3");
+                    let bombExplosion = new Audio("8bitbomb.mp3");
                     bombExplosion.play();
                 }
             }
