@@ -543,3 +543,13 @@ ul.topnav li.icon {
   font-size: 150%;
   margin: 0 0 15px;
 }
+
+#txt{
+    font-size: 80%;
+}
+#commandes{
+    padding-top: 1%;
+    height: 50%;
+    width: 50%;
+
+}
