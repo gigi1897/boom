@@ -33,7 +33,6 @@ header li a {
 }
 #titre{
     text-align: center;
-
 }
 
 input[type="text"]
@@ -63,12 +62,9 @@ input[type="text"]
     height:43pt;
 }
 
-
-
 /*section index*/
 
 #selectyourplayer{
-
     margin-top: 20px;
 }
 
@@ -82,10 +78,7 @@ table, th, td {
 }
 #playersList{
     text-align: center;
-
 }
-
-
 
 td{
     width: 70px;
@@ -189,7 +182,6 @@ canvas{
     top: 30%;
     color:white;
     text-align: right;
-
 }
 
 #Instructionsleft>p, #Instructionsright>p{
@@ -254,7 +246,6 @@ canvas{
 
 
 #imagePlayer1,#imagePlayer2{
-
     padding-top: 2%;
     padding-bottom: 2%;
     color:rgb(246, 202, 92);
@@ -271,7 +262,6 @@ canvas{
 }
 /*statistiques*/
 .dataTable{
-
     float:right;
     padding-right: 5%;
 }
@@ -306,7 +296,6 @@ font-family: 'Arial', Fallback, sans-serif;
 }
 
 .statstable{
-
     text-align: left;
     padding-left: 1%;
 }
@@ -316,11 +305,9 @@ font-family: 'Arial', Fallback, sans-serif;
      text-align: center;
     display: block;
     margin: auto;
-
     color:white;
     font-size:80%;
 }
-
 
 /*----------------------------------------------------------*/
 @keyframes glitch-1 {
@@ -379,7 +366,6 @@ a {
   text-decoration: none;
   font-family: '8bit16', Fallback, sans-serif;
 }
-
 
 /* all sections are off by default */
 body > section {
@@ -456,7 +442,6 @@ body .brand {
   display: block;
 }
 
-
 ul.topnav {
   text-align: right;
   list-style-type: none;
@@ -487,7 +472,6 @@ ul.topnav li a.selected {
 ul.topnav li.icon {
   display: none;
 }
-
 
 /*==================================================================================*/
 .modal-window {
@@ -542,4 +526,13 @@ ul.topnav li.icon {
 .modal-window h1 {
   font-size: 150%;
   margin: 0 0 15px;
+}
+
+#txt{
+    font-size: 80%;
+}
+#commandes{
+    padding-top: 1%;
+    height: 50%;
+    width: 50%;
 }
